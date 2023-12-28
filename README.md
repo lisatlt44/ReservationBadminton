@@ -2,31 +2,6 @@
 
 Un *projet* dockerisé de gestion des réservations de terrains de badminton via une API RESTful. Cette API est accompagnée d'un service de base de données relationnelles (MySQL) et d'un client graphique (Adminer).
 
-<!-- - [Évaluation 2/2 - Développement API : système de réservation de terrains de badminton *RESTful* avec Node.js, Express.js, MySQL et Adminer](#systeme-de-reservation-de-terrains-de-badminton-restful-avec-nodejs-expressjs-mysql-et-adminer)
-  - [Prérequis](#prérequis)
-  - [Lancer le projet avec Compose](#lancer-le-projet-avec-compose)
-  - [Tester](#tester)
-    - [API](#api)
-    - [Base de données](#base-de-données)
-    - [Client graphique Adminer pour la base de données MySQL](#client-graphique-adminer-pour-la-base-de-données-mysql)
-  - [Base de données](#base-de-données-1)
-    - [ORM](#orm)
-  - [Debuger lors du développement](#debuger-lors-du-développement)
-    - [En ligne de commande avec docker](#en-ligne-de-commande-avec-docker)
-    - [Avec Visual Studio Code](#avec-visual-studio-code)
-  - [Documentation de l'API avec Swagger](#documentation-de-lapi-avec-swagger)
-  - [Installer et servir de nouvelles dépendances](#installer-et-servir-de-nouvelles-dépendances)
-  - [Arrêter le projet](#arrêter-le-projet)
-  - [Améliorations](#améliorations)
-  - [Conseils pour le développement](#conseils-pour-le-développement)
-  - [Modules Node.Js notables](#modules-nodejs-notables)
-  <!-- - [Autorisation avec JWT](#autorisation-avec-jwt) -->
-  <!-- - [Ressources](#ressources)
-    - [Docker](#docker)
-    - [Express](#express)
-    - [SGBDR](#sgbdr)
-    - [Adminer](#adminer) --> 
-
 - [Prérequis](#prérequis)
 - [Lancer le projet avec Compose](#lancer-le-projet-avec-compose)
 - [Tester](#tester)
@@ -35,6 +10,7 @@ Un *projet* dockerisé de gestion des réservations de terrains de badminton via
   - [Base de données](#base-de-données)
   - [Client graphique Adminer pour la base de données MySQL](#client-graphique-adminer-pour-la-base-de-données-mysql)
 - [Base de données](#base-de-données-1)
+  - [Importation des données dans Adminer](#importation-des-données-dans-adminer)
 - [Debuger lors du développement](#debuger-lors-du-développement)
   - [En ligne de commande avec docker](#en-ligne-de-commande-avec-docker)
   - [Avec Visual Studio Code](#avec-visual-studio-code)
@@ -42,7 +18,8 @@ Un *projet* dockerisé de gestion des réservations de terrains de badminton via
 - [Arrêter le projet](#arrêter-le-projet)
 - [Conseils pour visualiser les requêtes](#conseils-pour-visualiser-les-requêtes)
 - [Modules Node.Js utilisés au sein de ce projet](#modules-nodejs-utilisés-au-sein-de-ce-projet)
-- [Ressources](#ressources)
+- [Remarques](#remarques)
+- [Références](#références)
   - [Docker](#docker)
   - [Express](#express)
   - [SGBDR](#sgbdr)
@@ -94,7 +71,7 @@ npm install
 cd /api
 ~~~
 
-Base de
+Base de données
 - Assurez-vous d'importer la base de données fournie pour garantir le bon fonctionnement du projet. Pour ce faire, suivez les étapes d'importation disponibles [ici](#base-de-données-1).
 
 Démarrer le projet
@@ -250,7 +227,9 @@ Ces étapes préliminaires facilitent grandement les tests des requêtes du proj
 
 Pour **autoriser** (et donc authentifier) l'utilisateur à interagir avec les ressources, on utilise un JSON Web Token. Implémentée dans le projet avec le package [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) -->
 
-## Ressources
+## Remarques
+
+## Références
 
 ### Docker
 
