@@ -263,14 +263,14 @@ Légende :
 | `start_time`             | Date de début de réservation                         | D    |    20    | Date au format YYYY-mm-dd HH:mm:ss                     | Oui         |
 | `end_time`               | Date de fin de réservation                           | D    |    20    | Date au format YYYY-mm-dd HH:mm:ss                     | Oui         |
 | `date_booking`           | Date de quand la réservation est effectuée           | D    |    20    | Date au format YYYY-mm-dd            | Oui         |
-| `statut`                 | Statut de la réservation                             | A    |    10    | Statut de la réservation (Confirmée, Annulée) | Oui    |
+| `statut`*                | Statut de la réservation                             | A    |    10    | Statut de la réservation (Confirmée, Annulée) | Oui    |
 | `id_user`                | Identifiant de l'utilisateur                         | N    |    Entier encodé sur 64 bits    | Identifiant unique          | Oui         |
 | `pseudo`                 | Nom de l'utilisateur                                 | AN   |    20    | Chaîne de caractères représentant le nom d'utilisateur | Oui         |
 | `password`               | Mot de passe de l'utilisateur                        | AN   |   20     | Mot de passe de l'utilisateur                | Non         |
 | `is_admin`               | Détermine si l'utilisateur est administrateur        | B    |    1    | Booléen indiquant le statut administrateur   | Oui         |
 
 
->* le mot *status* est un mot-clef réservé par MySQL. On utilise donc le mot français *statut* ici.
+>* Le mot *status* est un mot-clef réservé par MySQL. On utilise donc le mot français *statut* ici.
 
 ## Remarques
 
