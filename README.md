@@ -18,6 +18,8 @@ Un *projet* dockerisé de gestion des réservations de terrains de badminton via
 - [Arrêter le projet](#arrêter-le-projet)
 - [Conseils pour visualiser les requêtes](#conseils-pour-visualiser-les-requêtes)
 - [Dépendances utilisées au sein de ce projet](#dépendances-utilisées-au-sein-de-ce-projet)
+- [Conception](#conception)
+  - [Dictionnaire des données](#dictionnaire-des-données)
 - [Remarques](#remarques)
 - [Références](#références)
   - [Docker](#docker)
@@ -153,7 +155,7 @@ Pour utiliser les tables et les données préexistantes dans le projet, importez
 
 1. Lancez Adminer en accédant à [http://localhost:5003](http://localhost:5003) dans votre navigateur.
 2. Connectez-vous en utilisant les identifiants mentionnés ci-dessus (root ou user).
-3. Accédez à la section d'importation dans l'interface Adminer et importez le fichier SQL présent dans le projet.
+3. Accédez à la section d'importation dans l'interface Adminer et importez le fichier `mydb.sql` présent dans le projet.
 
 Cela créera les tables et chargera les données prêtes à être utilisées dans le projet.
 
@@ -237,6 +239,36 @@ Ces étapes préliminaires facilitent grandement les tests des requêtes du proj
 - **pug** (`2.0.0-beta11`) : Moteur de templates JavaScript pour Express. Crée des vues HTML dynamiques en utilisant la syntaxe simplifiée de Pug (anciennement connu sous le nom de Jade).
 
 Chacune de ces dépendances a joué un rôle essentiel dans le développement de l'API, contribuant ainsi au bon fonctionnement général du projet.
+
+## Conception
+
+### Dictionnaire des données
+
+Légende :
+- `AN` : **Alphanumérique**
+- `N` : **Numérique**
+- `A` : **Alphabétique**
+- `D` : **Date (et DateTime)**
+- `B` : **Booléen**
+
+Bien sûr, voici la mise à jour du tableau avec les champs supplémentaires que vous avez mentionnés :
+
+| Code                  | Désignation                                          | Type | Taille | Remarque                                    | Obligatoire |
+|-----------------------|-------------------------------------------------------|------|--------|---------------------------------------------|-------------|
+| CourtID               | Identifiant du terrain                                | N   |        | Identifiant unique                           | Oui         |
+| CourtName             | Nom du terrain                                       | A   |        | Chaîne de caractères représentant le nom du terrain | Oui         |
+| Availability          | Disponibilité du terrain                              | B    |        | Boolean indiquant la disponibilité            | Oui         |
+| StartDateUnavailable  | Date de début de l'indisponibilité temporaire        | D    |        | Date au format YYYY-mm-dd HH:mm:ss           | Non         |
+| EndDateUnavailable    | Date de fin de l'indisponibilité temporaire          | D    |        | Date au format YYYY-mm-dd HH:mm:ss           | Non         |
+| BookingID             | Identifiant de la réservation                         | N    |        | Identifiant unique          | Oui         |
+| StartTime             | Date de début de réservation                         | D    |        | Date au format YYYY-mm-dd HH:mm:ss                     | Oui         |
+| EndTime               | Date de fin de réservation                           | D    |        | Date au format YYYY-mm-dd HH:mm:ss                     | Oui         |
+| BookingDate           | Date de quand la réservation est effectuée           | D    |        | Date au format YYYY-mm-dd            | Oui         |
+| Status                | Statut de la réservation                              | A   |        | Statut de la réservation (Confirmée, Annulée) | Oui    |
+| UserID                | Identifiant de l'utilisateur                          | N    |        | Identifiant unique          | Oui         |
+| Username              | Nom d'utilisateur                                    | AN   |        | Chaîne de caractères représentant le nom d'utilisateur | Oui         |
+| Password              | Mot de passe de l'utilisateur                         | AN   |        | Mot de passe de l'utilisateur                | Non         |
+| Is_admin              | Détermine si l'utilisateur est administrateur         | B    |        | Booléen indiquant le statut administrateur   | Oui         |
 
 
 ## Remarques
