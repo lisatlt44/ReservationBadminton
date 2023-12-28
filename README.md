@@ -1,4 +1,4 @@
-# Évaluation 2/2 - Développement API : système de réservation de terrains de badminton *RESTful* avec Node.js, Express.js, MySQL et Adminer
+# Évaluation 2/2 - Développement API : système de réservations de terrains de badminton via une API *RESTful* avec Node.js, Express.js, MySQL et Adminer.
 
 Un *projet* dockerisé de gestion des réservations de terrains de badminton via une API RESTful. Cette API est accompagnée d'un service de base de données relationnelles (MySQL) et d'un client graphique (Adminer).
 
@@ -20,11 +20,10 @@ Un *projet* dockerisé de gestion des réservations de terrains de badminton via
   - [Améliorations](#améliorations)
   - [Conseils pour le développement](#conseils-pour-le-développement)
   - [Modules Node.Js notables](#modules-nodejs-notables)
-  - [Autorisation avec JWT](#autorisation-avec-jwt)
+  <!-- - [Autorisation avec JWT](#autorisation-avec-jwt) -->
   - [Ressources](#ressources)
     - [Docker](#docker)
     - [Express](#express)
-    - [Swagger](#swagger)
     - [SGBDR](#sgbdr)
     - [Adminer](#adminer)
 
@@ -129,15 +128,27 @@ Se rendre sur l'URL [http://localhost:5003](http://localhost:5003) (par défaut)
 
 ## Base de données
 
-La base de données vient avec deux utilisateurs par défaut :
+La configuration de la base de données comprend deux utilisateurs par défaut :
 
 - `root` (administrateur), mot de passe : `root`
 - `user` (utilisateur lambda), mot de passe : `password`
+- **root** (administrateur) avec le mot de passe : **root**
+- **user** (utilisateur standard) avec le mot de passe : **password**
 
 Pour accéder à la base de données :
 
-- *Depuis* un autre conteneur (Node.js, Adminer) : `host` est `db`, le nom du service sur le réseau Docker
-- *Depuis* la machine hôte (une application node, PHP exécutée sur votre machine, etc.) : `host` est `localhost` ou `127.0.0.1`. **Préférer utiliser l'adresse IP `127.0.0.1` plutôt que son alias `localhost`** pour faire référence à votre machine (interface réseau qui) afin éviter des potentiels conflits de configuration avec le fichier [socket](https://www.jetbrains.com/help/datagrip/how-to-connect-to-mysql-with-unix-sockets.html) (interface de connexion sous forme de fichier sur les systèmes UNIX) du serveur MySQL installé sur votre machine hôte (si c'est le cas).
+- **Depuis un autre conteneur** (Node.js, Adminer) : `host` est défini comme `db`, qui est le nom du service dans le réseau Docker.
+- . **Depuis votre machine hôte** (une application node, PHP exécuté sur votre machine, etc.) : `host` est `localhost` ou `127.0.0.1`. **Préférer utiliser l'adresse IP `127.0.0.1` plutôt que son alias `localhost`** pour faire référence à votre machine afin d'éviter des potentiels conflits de configuration avec le fichier *socket* du serveur MySQL installé sur votre machine hôte (si applicable).
+
+### Importation des données dans Adminer
+
+Pour utiliser les tables et les données préexistantes dans le projet, importez le fichier SQL fourni dans votre interface Adminer :
+
+1. Lancez Adminer en accédant à [http://localhost:5003](http://localhost:5003) dans votre navigateur.
+2. Connectez-vous en utilisant les identifiants mentionnés ci-dessus (root ou user).
+3. Accédez à la section d'importation dans l'interface Adminer et importez le fichier SQL présent dans le projet.
+
+Cela créera les tables et chargera les données prêtes à être utilisées dans le projet.
 
 ## Debuger lors du développement
 
@@ -203,11 +214,11 @@ Ces étapes préliminaires facilitent grandement les tests des requêtes du proj
 - [cors](https://www.npmjs.com/package/cors), un module middleware pour gérer la politique CORS (*Cross Origin Resource Sharing*)
 - [mysql2](https://www.npmjs.com/package/mysql2), un client MySQL pour Node.js qui [utilise l'API des promesses](https://www.npmjs.com/package/mysql2#using-promise-wrapper) (contrairement à son prédécesseur [mysql](https://www.npmjs.com/package/mysql))
 
-## Autorisation avec JWT
+<!-- ## Autorisation avec JWT
 
 >JSON Web Token (JWT) is a compact, URL-safe means of *representing claims to be transferred between two parties* (Source: RFC7519)
 
-Pour **autoriser** (et donc authentifier) l'utilisateur à interagir avec les ressources, on utilise un JSON Web Token. Implémentée dans le projet avec le package [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+Pour **autoriser** (et donc authentifier) l'utilisateur à interagir avec les ressources, on utilise un JSON Web Token. Implémentée dans le projet avec le package [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) -->
 
 ## Ressources
 
@@ -220,16 +231,14 @@ Pour **autoriser** (et donc authentifier) l'utilisateur à interagir avec les re
 
 ### Express
 
-- [Générateur d’applications Express](https://expressjs.com/fr/starter/generator.html), générer un projet pour démarrer
-- [Routage](https://expressjs.com/fr/guide/routing.html), la documentation sur le routage d'Express
-- [Pug](https://pugjs.org/api/getting-started.html), moteur de templates javascript installé par défaut avec Express
-- [API JSON Web Token Authentication (JWT) sur Express.js](https://etienner.github.io/api-json-web-token-authentication-jwt-sur-express-js/), un bon tutoriel pour mettre en place des routes protégées par Json Web Token
+- [Générateur d’applications Express](https://expressjs.com/fr/starter/generator.html), générer un projet pour démarrer.
+- [Routage](https://expressjs.com/fr/guide/routing.html), la documentation sur le routage d'Express.
+- [Pug](https://pugjs.org/api/getting-started.html), moteur de templates javascript installé par défaut avec Express.
+- [API JSON Web Token Authentication (JWT) sur Express.js](https://etienner.github.io/api-json-web-token-authentication-jwt-sur-express-js/), un bon tutoriel pour mettre en place des routes protégées par Json Web Token.
 
 ### SGBDR
 
-- [MySQL Docker Image, quick reference](https://hub.docker.com/_/mysql/)
 - [mysql2](https://www.npmjs.com/package/mysql2), le driver node.js pour le SGBDR MySQL qui implémente l'API des promesses (contrairement à [mysql](https://www.npmjs.com/package/mysql))
-- [Sequelize, Getting Started](https://sequelize.org/docs/v6/getting-started/), Sequelize, un ORM pour Node.js
 
 ### Adminer
 
