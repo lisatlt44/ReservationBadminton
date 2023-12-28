@@ -32,8 +32,8 @@ Un *projet* dockerisé de gestion des réservations de terrains de badminton via
 
 Pour initialiser et exécuter ce projet, vous aurez besoin des éléments suivants :
 
-- Node.js : Assurez-vous d'avoir Node.js installé localement. Vous pouvez le télécharger et l'installer depuis [nodejs.org](https://nodejs.org/en)
-- Docker et Docker Compose :  Installez Docker et Docker Compose sur votre machine. Ces outils permettent de gérer les conteneurs pour cette application. Vous pouvez les obtenir sur [docker.com](https://www.docker.com/get-started/)
+- Node.js : Assurez-vous d'avoir Node.js installé localement. Vous pouvez le télécharger et l'installer depuis [nodejs.org](https://nodejs.org/en).
+- Docker et Docker Compose :  Installez Docker et Docker Compose sur votre machine. Ces outils permettent de gérer les conteneurs pour cette application. Vous pouvez les obtenir sur [docker.com](https://www.docker.com/get-started/).
 
 Clonage du dépôt
 - N'oubliez pas de cloner le dépôt du projet sur votre machine locale, puis de vous placer à la racine du projet :
@@ -43,7 +43,7 @@ git clone <URL_DU_DÉPÔT>
 cd nom_du_dépôt
 ~~~
 
-> Attention, si vous désirez créer votre propre dépôt à partir des sources, n'oubliez pas de supprimer le dossier `.git`.
+> Attention, si vous désirez créer votre propre dépôt à partir des sources, n'oubliez pas de supprimer le dossier `.git` en utilisant les commandes suivantes :
 
 ~~~
 rm -R .git
@@ -53,7 +53,7 @@ git init
 ## Lancer le projet avec Compose
 
 Fichiers d'environnement
-- Dupliquez le fichier d'environnement `.env.dist` fourni dans le dépôt et renommez-le en `.env`. 
+- Dupliquez le fichier d'environnement `.env.dist` fourni dans le dépôt et renommez-le en `.env` :
 
 ~~~
 cp .env.dist .env
@@ -68,11 +68,14 @@ Installation des dépendances
 npm install
 ~~~
 
-> Avant d'exécuter la commande, assurez-vous d'être positionné correctement dans le répertoire */api*.
+> Avant d'exécuter la commande, assurez-vous d'être positionné correctement dans le répertoire */api* :
 
 ~~~
 cd /api
 ~~~
+
+Importation des données dans Adminer
+- Avant de passer à la suite, assurez-vous d'importer la base de données fournie pour garantir le bon fonctionnement du projet. Pour ce faire, suivez les étapes d'importation disponibles [ici](#base-de-données-1).
 
 Démarrer le projet
 
@@ -82,6 +85,10 @@ docker-compose up -d
 
 ## Tester
 
+### Erreur connue au démarrage
+
+**Il se peut que le serveur MySQl mette un peu de temps à démarrer, résultant en une erreur (`ECONNREFUSED`) de la tentative de connexion de l'application node qui est déjà active. Il suffit de sauvegarder un fichier source js (par exemple `app.js`) pour réinitialiser l'état de l'application et de la connexion à MySQL.**
+
 ### API
 
 Pour accéder à l'API du projet, rendez-vous à l'URL [localhost:5001](http://localhost:5001) dans votre navigateur ou testez-la à l'aide d'un outil comme [Hoppscotch](https://hoppscotch.io/) ou [curl](https://curl.se/).
@@ -90,37 +97,36 @@ Pour accéder à l'API du projet, rendez-vous à l'URL [localhost:5001](http://l
 
 Exemple avec `curl` :
 
-```bash
-# Obtenir la représentation HTML
+~~~
+# Web humain (HTML)
 curl --include localhost:5001
-
-# Obtenir les données de l'API au format JSON
-curl localhost:5001
-```
+# API (JSON)
+curl --include localhost:5001/users
+~~~
 
 ### Base de données
 
 Pour interagir avec la base de données, vous pouvez utiliser différents outils. Voici comment vous connecter via la ligne de commande avec MySQL : 
 
-```bash
+~~~
 mysql -uroot -proot -Dmydb -h127.0.0.1 -P5002
-```
+~~~
 
 Dans la session MySQL ouverte, vous pouvez exécuter des requêtes SQL pour obtenir des informations spécifiques, telles que la liste des utilisateurs :
 
-```SQL
+~~~SQL
 -- Liste des utilisateurs MySQL
 SELECT user FROM mysql.user;
 
 -- Liste des utilisateurs dans la base de départ
 SELECT * FROM User;
-```
+~~~
 
 Pour exécuter un script SQL en mode *Batch* :
 
-```bash
+~~~bash
 mysql -uroot -p -Dmydb -h127.0.0.1 -P5002 < script.sql
-```
+~~~
 
 > Assurez-vous de modifier la valeur du port si vous l'avez changée dans le fichier `.env`.
 
@@ -130,7 +136,7 @@ mysql -uroot -p -Dmydb -h127.0.0.1 -P5002 < script.sql
 
 Le starterpack vient avec [Adminer](https://www.adminer.org/), un gestionnaire de base de données à interface graphique, simple et puissant.
 
-Se rendre sur l'URL [http://localhost:5003](http://localhost:5003) (par défaut) et se connecter avec les credentials *root* (login *root* et mot de passe *root* par défaut), ou ceux de l'utilisateur (`user` et `password` par défaut)
+Se rendre sur l'URL [http://localhost:5003](http://localhost:5003) (par défaut) et se connecter avec les credentials *root* (login *root* et mot de passe *root* par défaut), ou ceux de l'utilisateur (`user` et `password` par défaut).
 
 ## Base de données
 
@@ -158,7 +164,7 @@ Cela créera les tables et chargera les données prêtes à être utilisées dan
 
 Inspecter les *logs* du conteneur Docker qui contiennent tout ce qui est écrit sur la sortie standard (avec `console.log()`). Les sources de l'application Node.js sont *watchées*, donc à chaque modification d'un fichier source l'application redémarre pour les prendre en compte automatiquement.
 
-> Si l'application ne redémarre pas automatiquement après une modification, bien que contraignant, veuillez à redémarrer le conteneur Docker manuellement à chaque modification, ou avec la commande : 
+> Si l'application ne se redémarre pas automatiquement suite à une modification, bien que cela soit contraignant, veillez à redémarrer manuellement le conteneur Docker à chaque changement, ou utilisez la commande suivante : 
 
 ~~~
 docker-compose up -d
@@ -173,8 +179,8 @@ docker logs -f rest-api-api
 
 ### Avec Visual Studio Code
 
-- Installer l'[extension officielle Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
-- Click droit sur le conteneur `rest-api-api` qui héberge l'application Node.js,  puis `View Logs`
+- Installer l'[extension officielle Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker).
+- Clic droit sur le conteneur `rest-api-api` qui héberge l'application Node.js,  puis `View Logs`.
 
 ## Installer et servir de nouvelles dépendances
 
