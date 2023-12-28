@@ -17,7 +17,7 @@ Un *projet* dockerisé de gestion des réservations de terrains de badminton via
 - [Installer et servir de nouvelles dépendances](#installer-et-servir-de-nouvelles-dépendances)
 - [Arrêter le projet](#arrêter-le-projet)
 - [Conseils pour visualiser les requêtes](#conseils-pour-visualiser-les-requêtes)
-- [Modules Node.Js utilisés au sein de ce projet](#modules-nodejs-utilisés-au-sein-de-ce-projet)
+- [Dépendances utilisées au sein de ce projet](#dépendances-utilisées-au-sein-de-ce-projet)
 - [Remarques](#remarques)
 - [Références](#références)
   - [Docker](#docker)
@@ -214,24 +214,43 @@ Ces étapes préliminaires facilitent grandement les tests des requêtes du proj
 
 > Remarque : Les requêtes nécessitant un corps de requête doivent présenter les données attendues au format *application/json*.
 
-## Modules Node.Js utilisés au sein de ce projet
+## Dépendances utilisées au sein de ce projet
 
 - [bodyParser](https://www.npmjs.com/package/body-parser), un parser du corps de requête pour les applications node. On s'en sert pour parser les représentations envoyées par le client dans nos contrôleurs avec l'instruction `app.use(bodyParser.urlencoded({ extended: true }));`
 - [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken), une implémentation javascript du standard JSON Web Token, voir [RFC 7519](https://www.rfc-editor.org/rfc/rfc7519)
 - [cors](https://www.npmjs.com/package/cors), un module middleware pour gérer la politique CORS (*Cross Origin Resource Sharing*)
 - [mysql2](https://www.npmjs.com/package/mysql2), un client MySQL pour Node.js qui [utilise l'API des promesses](https://www.npmjs.com/package/mysql2#using-promise-wrapper) (contrairement à son prédécesseur [mysql](https://www.npmjs.com/package/mysql))
 
-<!-- ## Autorisation avec JWT
+### Dépendances utilisées dans le projet
 
->JSON Web Token (JWT) is a compact, URL-safe means of *representing claims to be transferred between two parties* (Source: RFC7519)
+- **cookie-parser** (`~1.4.4`) : Middleware pour analyser les cookies des requêtes HTTP. Utile pour gérer les cookies dans l'application Express.
 
-Pour **autoriser** (et donc authentifier) l'utilisateur à interagir avec les ressources, on utilise un JSON Web Token. Implémentée dans le projet avec le package [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) -->
+- **date-fns** (`^3.0.6`) : Bibliothèque utilitaire pour manipuler les dates en JavaScript. Offre des fonctions pour faciliter la manipulation, le formatage et la comparaison des dates.
+
+- **debug** (`~2.6.9`) : Outil de débogage pour les applications Node.js. Permet d'inclure des informations de débogage dans les logs de l'application.
+
+- **express** (`~4.16.1`) : Framework minimaliste pour créer des applications web avec Node.js. Simplifie la gestion des routes, des middlewares et des requêtes HTTP.
+
+- **http-errors** (`~1.6.3`) : Utilitaire pour créer des erreurs HTTP avec des messages et des codes d'état. Utile pour générer des erreurs HTTP de manière simple et cohérente.
+
+- **jsonwebtoken** (`^9.0.2`) : Implémentation JavaScript des JSON Web Tokens (JWT). Permet de créer, signer et vérifier les tokens d'authentification dans l'application.
+
+- **morgan** (`~1.9.1`) : Middleware de logging des requêtes HTTP pour Express. Enregistre les détails des requêtes (URL, méthodes HTTP, codes de statut) dans les logs de l'application.
+
+- **mysql** (`^2.18.1`) : Client MySQL pour Node.js. Établit des connexions à une base de données MySQL, exécute des requêtes et récupère les résultats.
+
+- **mysql2** (`^3.6.2`) : Client MySQL amélioré pour Node.js utilisant l'API des promesses. Offre des fonctionnalités similaires à `mysql` mais utilise les promesses pour les opérations asynchrones.
+
+- **pug** (`2.0.0-beta11`) : Moteur de templates JavaScript pour Express. Crée des vues HTML dynamiques en utilisant la syntaxe simplifiée de Pug (anciennement connu sous le nom de Jade).
+
+Chacune de ces dépendances a joué un rôle essentiel dans le développement de l'API, contribuant ainsi au bon fonctionnement général du projet.
+
 
 ## Remarques
 
 ## Références
 
-### Docker
+<!-- ### Docker
 
 - [Image Docker Node](https://hub.docker.com/_/node)
 - [Image Docker MySQL](https://hub.docker.com/_/mysql)
@@ -251,4 +270,4 @@ Pour **autoriser** (et donc authentifier) l'utilisateur à interagir avec les re
 
 ### Adminer
 
-- [Adminer](https://www.adminer.org/)
+- [Adminer](https://www.adminer.org/) -->
