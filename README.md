@@ -1,8 +1,8 @@
-# Développement API 2/2 : *RESTful* système de réservation de terrains de badminton avec Node.js, Express.js, MySQL et Adminer
+# Évaluation 2/2 - Développement API : système de réservation de terrains de badminton *RESTful* avec Node.js, Express.js, MySQL et Adminer
 
-Un *starter pack* dockerisé d'une application web node.js pour développer une web API RESTful. L'API vient avec un service de base de données relationnelles (MySQL) et un client graphique (Adminer).
+Un *projet* dockerisé d'un système de réservation de terrains de badminton utilisant une web API RESTful. L'API vient avec un service de base de données relationnelles (MySQL) et un client graphique (Adminer).
 
-- [Starter pack: *RESTful* web API avec Node.js, Express.js, MySQL et Adminer](#starter-pack-restful-web-api-avec-nodejs-expressjs-mysql-et-adminer)
+- [Évaluation 2/2 - Développement API : système de réservation de terrains de badminton *RESTful* avec Node.js, Express.js, MySQL et Adminer](#systeme-de-reservation-de-terrains-de-badminton-restful-avec-nodejs-expressjs-mysql-et-adminer)
   - [Prérequis](#prérequis)
   - [Lancer le projet avec Compose](#lancer-le-projet-avec-compose)
   - [Tester](#tester)
