@@ -1,6 +1,6 @@
 # Évaluation 2/2 - Développement API : système de réservation de terrains de badminton *RESTful* avec Node.js, Express.js, MySQL et Adminer
 
-Un *projet* dockerisé d'un système de réservation de terrains de badminton utilisant une web API RESTful. L'API vient avec un service de base de données relationnelles (MySQL) et un client graphique (Adminer).
+Un *projet* dockerisé de gestion des réservations de terrains de badminton via une API RESTful. Cette API est accompagnée d'un service de base de données relationnelles (MySQL) et d'un client graphique (Adminer).
 
 - [Évaluation 2/2 - Développement API : système de réservation de terrains de badminton *RESTful* avec Node.js, Express.js, MySQL et Adminer](#systeme-de-reservation-de-terrains-de-badminton-restful-avec-nodejs-expressjs-mysql-et-adminer)
   - [Prérequis](#prérequis)
@@ -34,7 +34,7 @@ Un *projet* dockerisé d'un système de réservation de terrains de badminton ut
 Pour initialiser et exécuter ce projet, vous aurez besoin des éléments suivants :
 
 - Node.js : Assurez-vous d'avoir Node.js installé localement. Vous pouvez le télécharger et l'installer depuis [nodejs.org.](https://nodejs.org/en)
-- Docker et Docker Compose :  Installez Docker et Docker Compose sur votre machine. Ces outils permettent de gérer les conteneurs pour votre application. Vous pouvez les obtenir sur [docker.com](https://www.docker.com/get-started/)
+- Docker et Docker Compose :  Installez Docker et Docker Compose sur votre machine. Ces outils permettent de gérer les conteneurs pour cette application. Vous pouvez les obtenir sur [docker.com](https://www.docker.com/get-started/)
 
 Clonage du dépôt
 - N'oubliez pas de cloner le dépôt du projet sur votre machine locale, puis de vous placer à la racine du projet :
@@ -53,7 +53,8 @@ git init
 
 ## Lancer le projet avec Compose
 
-Dupliquer le fichier `.env.dist`
+Fichiers d'environnement
+- Dupliquez le fichier d'environnement .env.dist fourni dans le dépôt et renommez-le en .env.
 
 ~~~
 cp .env.dist .env
@@ -61,14 +62,15 @@ cp .env.dist .env
 
 > Vous pouvez modifier les variables d'environnement si vous le souhaitez (des valeurs par défaut sont fournies)
 
-Installer les dépendances de l'application node et générer la doc swagger
+Installation des dépendances
+- Installez toutes les dépendances nécessaires pour le projet en exécutant la commande suivante à la racine du projet :
 
 ~~~
-pushd api
+cd /api
 npm install
-npm run swagger-autogen
-popd
 ~~~
+
+> Assurez vous d'être correctement placé au sein du répertoire */api* lors de l'éxécution de la commande.
 
 Démarrer le projet
 
