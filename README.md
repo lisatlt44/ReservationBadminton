@@ -31,11 +31,20 @@ Un *projet* dockerisé d'un système de réservation de terrains de badminton ut
 
 ## Prérequis
 
-- installer [node.js](https://nodejs.org/en)
-- installer [Docker](https://www.docker.com/get-started/) et [Compose](https://docs.docker.com/compose/)
-- clôner le dépôt et se placer à la racine du projet
+Pour initialiser et exécuter ce projet, vous aurez besoin des éléments suivants :
 
->N'oubliez pas de supprimer le dossier `.git` si vous désirez créer votre propre dépôt à partir des sources
+- Node.js : Assurez-vous d'avoir Node.js installé localement. Vous pouvez le télécharger et l'installer depuis [nodejs.org.](https://nodejs.org/en)
+- Docker et Docker Compose :  Installez Docker et Docker Compose sur votre machine. Ces outils permettent de gérer les conteneurs pour votre application. Vous pouvez les obtenir sur [docker.com](https://www.docker.com/get-started/)
+
+Clonage du dépôt
+- N'oubliez pas de cloner le dépôt du projet sur votre machine locale, puis de vous placer à la racine du projet :
+
+~~~
+git clone <URL_DU_DÉPÔT>
+cd nom_du_dépôt
+~~~
+
+> Attention, si vous désirez créer votre propre dépôt à partir des sources, n'oubliez pas de supprimer le dossier `.git`.
 
 ~~~
 rm -R .git
