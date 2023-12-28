@@ -11,7 +11,7 @@ Un *projet* dockerisé de gestion des réservations de terrains de badminton via
   - [Client graphique Adminer pour la base de données MySQL](#client-graphique-adminer-pour-la-base-de-données-mysql)
 - [Base de données](#base-de-données-1)
   - [Importation des données dans Adminer](#importation-des-données-dans-adminer)
-- [Debuger lors du développement](#debuger-lors-du-développement)
+- [Déboguer lors du développement](#déboguer-lors-du-développement)
   - [En ligne de commande avec docker](#en-ligne-de-commande-avec-docker)
   - [Avec Visual Studio Code](#avec-visual-studio-code)
 - [Installer et servir de nouvelles dépendances](#installer-et-servir-de-nouvelles-dépendances)
@@ -30,7 +30,7 @@ Un *projet* dockerisé de gestion des réservations de terrains de badminton via
 Pour initialiser et exécuter ce projet, vous aurez besoin des éléments suivants :
 
 - Node.js : Assurez-vous d'avoir Node.js installé localement. Vous pouvez le télécharger et l'installer depuis [nodejs.org](https://nodejs.org/en).
-- Docker et Docker Compose :  Installez Docker et Docker Compose sur votre machine. Ces outils permettent de gérer les conteneurs pour cette application. Vous pouvez les obtenir sur [docker.com](https://www.docker.com/get-started/).
+- Docker et Docker Compose :  Installez Docker et Docker Compose sur votre machine. Ces outils permettent de gérer les conteneurs pour ce projet. Vous pouvez les obtenir sur [docker.com](https://www.docker.com/get-started/).
 
 Clonage du dépôt
 - N'oubliez pas de cloner le dépôt du projet sur votre machine locale, puis de vous placer à la racine du projet :
@@ -157,7 +157,7 @@ Pour utiliser les tables et les données préexistantes dans le projet, importez
 
 Cela créera les tables et chargera les données prêtes à être utilisées dans le projet.
 
-## Debuger lors du développement
+## Déboguer lors du développement
 
 Inspecter les *logs* du conteneur Docker qui contiennent tout ce qui est écrit sur la sortie standard (avec `console.log()`). Les sources de l'application Node.js sont *watchées*, donc à chaque modification d'un fichier source l'application redémarre pour les prendre en compte automatiquement.
 
@@ -240,6 +240,8 @@ Chacune de ces dépendances a joué un rôle essentiel dans le développement de
 
 
 ## Remarques
+
+Pendant le développement de ce projet, même en ayant suivi le modèle de départ du `starterpack-api-nodejs`, j'ai rencontré quelques difficultés avec la configuration initiale de Docker Compose, notamment pour jongler entre les conteneurs et leurs interactions. Mais en m'appuyant sur les guides et en faisant quelques ajustements dans les fichiers d'environnement, j'ai réussi à rapidement régler ces problèmes. A mes yeux, ça a été un projet assez long et demandant une certaine logique et minutie, mais il s'est avéré être une super occasion pour approfondir mes connaissances et compétences dans le développement d'API.
 
 ## Références
 
