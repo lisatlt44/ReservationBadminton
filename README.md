@@ -216,13 +216,6 @@ Ces étapes préliminaires facilitent grandement les tests des requêtes du proj
 
 ## Dépendances utilisées au sein de ce projet
 
-- [bodyParser](https://www.npmjs.com/package/body-parser), un parser du corps de requête pour les applications node. On s'en sert pour parser les représentations envoyées par le client dans nos contrôleurs avec l'instruction `app.use(bodyParser.urlencoded({ extended: true }));`
-- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken), une implémentation javascript du standard JSON Web Token, voir [RFC 7519](https://www.rfc-editor.org/rfc/rfc7519)
-- [cors](https://www.npmjs.com/package/cors), un module middleware pour gérer la politique CORS (*Cross Origin Resource Sharing*)
-- [mysql2](https://www.npmjs.com/package/mysql2), un client MySQL pour Node.js qui [utilise l'API des promesses](https://www.npmjs.com/package/mysql2#using-promise-wrapper) (contrairement à son prédécesseur [mysql](https://www.npmjs.com/package/mysql))
-
-### Dépendances utilisées dans le projet
-
 - **cookie-parser** (`~1.4.4`) : Middleware pour analyser les cookies des requêtes HTTP. Utile pour gérer les cookies dans l'application Express.
 
 - **date-fns** (`^3.0.6`) : Bibliothèque utilitaire pour manipuler les dates en JavaScript. Offre des fonctions pour faciliter la manipulation, le formatage et la comparaison des dates.
