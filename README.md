@@ -72,7 +72,7 @@ cd /api
 ~~~
 
 Base de données
-- Assurez-vous d'importer la base de données fournie pour garantir le bon fonctionnement du projet. Pour ce faire, suivez les étapes d'importation disponibles [ici](#base-de-données-1).
+- Assurez-vous d'importer la base de données fournie pour garantir le bon fonctionnement du projet. Pour ce faire, suivez les étapes d'importation disponibles [ici](#importation-des-données-dans-adminer).
 
 Démarrer le projet
 
@@ -90,7 +90,7 @@ docker-compose up -d
 
 Pour accéder à l'API du projet, rendez-vous à l'URL [localhost:5001](http://localhost:5001) dans votre navigateur ou testez-la à l'aide d'un outil comme [Hoppscotch](https://hoppscotch.io/) ou [curl](https://curl.se/).
 
-> L'utilisation de Hoppscotch est détaillée ici [Conseils pour le développement](#conseils-pour-le-développement)
+> L'utilisation de Hoppscotch est détaillée [ici](#conseils-pour-visualiser-les-requêtes)
 
 Exemple avec `curl` :
 
