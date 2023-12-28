@@ -33,7 +33,7 @@ Un *projet* dockerisé de gestion des réservations de terrains de badminton via
 
 Pour initialiser et exécuter ce projet, vous aurez besoin des éléments suivants :
 
-- Node.js : Assurez-vous d'avoir Node.js installé localement. Vous pouvez le télécharger et l'installer depuis [nodejs.org.](https://nodejs.org/en)
+- Node.js : Assurez-vous d'avoir Node.js installé localement. Vous pouvez le télécharger et l'installer depuis [nodejs.org](https://nodejs.org/en)
 - Docker et Docker Compose :  Installez Docker et Docker Compose sur votre machine. Ces outils permettent de gérer les conteneurs pour cette application. Vous pouvez les obtenir sur [docker.com](https://www.docker.com/get-started/)
 
 Clonage du dépôt
@@ -54,23 +54,26 @@ git init
 ## Lancer le projet avec Compose
 
 Fichiers d'environnement
-- Dupliquez le fichier d'environnement .env.dist fourni dans le dépôt et renommez-le en .env.
+- Dupliquez le fichier d'environnement `.env.dist` fourni dans le dépôt et renommez-le en `.env`. 
 
 ~~~
 cp .env.dist .env
 ~~~
 
-> Vous pouvez modifier les variables d'environnement si vous le souhaitez (des valeurs par défaut sont fournies)
+> Vous pouvez modifier les variables d'environnement si vous le souhaitez (des valeurs par défaut sont fournies).
 
 Installation des dépendances
-- Installez toutes les dépendances nécessaires pour le projet en exécutant la commande suivante à la racine du projet :
+- Installez toutes les dépendances nécessaires pour le projet en exécutant la commande suivante :
 
 ~~~
-cd /api
 npm install
 ~~~
 
-> Assurez vous d'être correctement placé au sein du répertoire */api* lors de l'éxécution de la commande.
+> Avant d'exécuter la commande, assurez-vous d'être positionné correctement dans le répertoire */api*.
+
+~~~
+cd /api
+~~~
 
 Démarrer le projet
 
@@ -136,79 +139,35 @@ Pour accéder à la base de données :
 - *Depuis* un autre conteneur (Node.js, Adminer) : `host` est `db`, le nom du service sur le réseau Docker
 - *Depuis* la machine hôte (une application node, PHP exécutée sur votre machine, etc.) : `host` est `localhost` ou `127.0.0.1`. **Préférer utiliser l'adresse IP `127.0.0.1` plutôt que son alias `localhost`** pour faire référence à votre machine (interface réseau qui) afin éviter des potentiels conflits de configuration avec le fichier [socket](https://www.jetbrains.com/help/datagrip/how-to-connect-to-mysql-with-unix-sockets.html) (interface de connexion sous forme de fichier sur les systèmes UNIX) du serveur MySQL installé sur votre machine hôte (si c'est le cas).
 
-<!-- 
-Depuis un script PHP sur la machine hote : 
-
-- new PDO('mysql:host=localhost:5002;dbname=mydb', $user, $pass); OK
-- new PDO('mysql:host=127.0.0.1:5002;dbname=mydb', $user, $pass); OK
-- new PDO('mysql:host=127.0.0.1;dbname=mydb;port=5002', $user, $pass); OK
-- new PDO('mysql:host=localhost;dbname=mydb;port=5002', $user, $pass); ERREUR ! Ici le port est ignoré et la connexion se fait par le socket de l'installation de mysql sur ma machine hote. Donc, le script PHP ne requête pas le serveur MySQL sur le conteneur mais celui sur ma machine hote. Cela se voit si on arrete le service MySQL sur la machine hote (systemctl stop/restart mysql)
-~~~php
-//Exemple en PHP
-<?php
-$user='root';
-$pass='root';
-$dbh = new PDO('mysql:host=127.0.0.1;port=5002;dbname=mydb', $user, $pass);
-$ps = $dbh->query('SELECT * FROM User;');
-$users = $ps->fetchAll();
-var_dump($users);
-~~~
-
-Différence entre utiliser 127.0.0.1 et localhost :
-
-Lorsque vous utilisez l'hôte "localhost", PDO essaie de se connecter à MySQL en utilisant un socket local plutôt que par TCP/IP. Le chemin du socket varie en fonction de la configuration de MySQL et de votre système.
-
-Lorsque vous utilisez "127.0.0.1" comme hôte, PDO se connecte à MySQL en utilisant TCP/IP sur le port par défaut (généralement 3306) au lieu d'utiliser un socket local, sauf si le port est spécifié dans le DSN. Cela peut contourner les problèmes liés à la résolution du nom de socket local.
-
-En conclusion : préférer utiliser 127.0.0.1 plutot que localhost pout s'épargner des conflits de configuration et être sûr de requêter le serveur MySQL conteneurisé.
- -->
-
-### ORM
-
-Pour interagir avec la base de données SQL, nous pouvons utiliser l'ORM [Sequelize](https://sequelize.org)
-
 ## Debuger lors du développement
 
-Inspecter les *logs* du conteneur Docker qui contiennent tout ce qui est écrit sur la sortie standard (avec `console.log()`). Les sources de l'application Node.js sont *watchées*, donc à chaque modification d'un fichier source l'application redémarre pour les prendre en compte automatiquement
+Inspecter les *logs* du conteneur Docker qui contiennent tout ce qui est écrit sur la sortie standard (avec `console.log()`). Les sources de l'application Node.js sont *watchées*, donc à chaque modification d'un fichier source l'application redémarre pour les prendre en compte automatiquement.
+
+> Si l'application ne redémarre par automatiquement après une modification, redémarrez le conteneur Docker manuellement, ou avec la commande : 
+
+~~~
+docker-compose up -d
+~~~
 
 ### En ligne de commande avec docker
 
 ~~~bash
 #Suivi en temps réel des logs
-docker logs -f demo-rest-api-api 
+docker logs -f rest-api-api 
 ~~~
 
 ### Avec Visual Studio Code
 
 - Installer l'[extension officielle Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
-- Click droit sur le conteneur `demo-rest-api-api` qui héberge l'application Node.js,  puis `View Logs`
-
-## Documentation de l'API avec Swagger
-
-Générer automatiquement la documentation de vos routes avec le module Swagger
-
-Placez-vous dans le dossier `api` puis
-
-~~~
-node swagger.js
-~~~
-
-ou
-
-~~~
-npm run swagger-autogen
-~~~
-
-Se rendre à l'URL `/doc` pour accéder à l'UI de Swagger
+- Click droit sur le conteneur `rest-api-api` qui héberge l'application Node.js,  puis `View Logs`
 
 ## Installer et servir de nouvelles dépendances
 
-A la racine de l'application, installer les dépendances désirées *via* `npm`
+A la racine de l'application, installer les dépendances désirées *via* `npm` :
 
 ~~~
-pushd api
+cd /api
 npm install <votre paquet>
-popd
 ~~~
 
 ## Arrêter le projet
@@ -217,18 +176,27 @@ popd
 docker-compose down
 ~~~
 
-## Améliorations
+## Conseils pour visualiser les requêtes
 
-Se débarrasser des étapes *avant* la dockerisation du projet (installation des dépendances). Le problème réside dans le fait que le volume monté *écrase* les fichiers lors de la construction de l'image. On ne peut donc pas en l'état simplement les déplacer dans l'image Docker.
+- Installez l'application Hoppscotch, une alternative à *PostMan*, à partir de [hoppscotch.io](https://hoppscotch.io/).
+  
+> Bien qu'une version web soit disponible, l'application pour PC offre une expérience plus conviviale et complète.
 
-## Conseils pour le développement
+- Ajoutez l'extension `Hoppscotch Browser Extension` à votre navigateur.
+  
+> Par exemple, sur Google, depuis [chromewebstore.google.com](https://chromewebstore.google.com/detail/amknoiejhlmhancpahfcfcfhllgkpbld).
 
-- Ouvrez une connexion MySQL pendant votre développement pour tester vos requêtes *avant* de les intégrer dans voter code
-- Utiliser cURL pour tester rapidement vos requêtes HTTP. Ouvrez par exemple deux terminaux, l'un avec cURL et l'autre avec les logs de l'API pour débuger facilement votre système
-- Installer le module `dotenv` pour placer le DSN (informations de connexion à la base) en dehors du code
-- Pour tester des enchaînements de requêtes, écrivez un script SQL capable de remettre la base dans un état initial et contenant les requêtes à tester et un autre script pour effectuer les requêtes HTTP, et exécuter le tout en *une commande*
+- Accédez à [localhost:5001](http://localhost:5001), ouvrez l'extension et ajoutez une nouvelle origine (`Enter new origin`). Généralement, l'URL de la page active est automatiquement détectée dans la liste.
 
-## Modules Node.Js notables
+> Si elle n'est pas détectée, saisissez manuellement `http://localhost:5001`, puis cliquez sur *Add*.
+
+- Dans l'application PC, rendez-vous en bas à gauche sur l'icône du "blason" correspondant au menu *Intercepteur*. Assurez-vous que la case `Extensions: v0.30` soit cochée. Vérifiez également que le bon moteur de recherche est sélectionné dans le menu *Intercepteur* des réglages.
+
+Ces étapes préliminaires facilitent grandement les tests des requêtes du projet, accessibles depuis l'URL `http://localhost:5001`, et permettent de les classer par ressources ou autres.
+
+> Remarque : Les requêtes nécessitant un corps de requête doivent présenter les données attendues au format *application/json*.
+
+## Modules Node.Js utilisés au sein de ce projet
 
 - [bodyParser](https://www.npmjs.com/package/body-parser), un parser du corps de requête pour les applications node. On s'en sert pour parser les représentations envoyées par le client dans nos contrôleurs avec l'instruction `app.use(bodyParser.urlencoded({ extended: true }));`
 - [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken), une implémentation javascript du standard JSON Web Token, voir [RFC 7519](https://www.rfc-editor.org/rfc/rfc7519)
@@ -256,14 +224,6 @@ Pour **autoriser** (et donc authentifier) l'utilisateur à interagir avec les re
 - [Routage](https://expressjs.com/fr/guide/routing.html), la documentation sur le routage d'Express
 - [Pug](https://pugjs.org/api/getting-started.html), moteur de templates javascript installé par défaut avec Express
 - [API JSON Web Token Authentication (JWT) sur Express.js](https://etienner.github.io/api-json-web-token-authentication-jwt-sur-express-js/), un bon tutoriel pour mettre en place des routes protégées par Json Web Token
-
-### Swagger
-
-- [Swagger UI](https://github.com/swagger-api/swagger-ui), documenter une web API RESTful (même si elle devrait être *par définition* auto-documentée et *auto-descriptive*)
-- [Swagger UI Express](https://www.npmjs.com/package/swagger-ui-express), module node.js pour générer la documentation de l'API avec Express
-- [Swagger auto-gen](https://www.npmjs.com/package/swagger-autogen), module de génération *automatique* de la documentation de l'API dans une application node.js/Express. Voir notamment la documentation pour documenter automatiquement les endpoints (résumé, description, paramètres)
-- [Swagger auto-gen: décrire des paramètres de formulaire POST](https://www.npmjs.com/package/swagger-autogen#parameters)
-- [OpenAPI Specification](https://github.com/OAI/OpenAPI-Specification), un standard de description d'une web API comptabile avec REST
 
 ### SGBDR
 
