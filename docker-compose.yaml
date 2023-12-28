@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  #La web API (node)
+  api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - ./api:/usr/src/app:rw
+    container_name: ${PROJECT_NAME}-api
+    ports:
+      - ${HOST_PORT_API}:3000
+    command: "node --watch ./bin/www"
+    depends_on:
+      - db  
+    #Pour être sûr que le conteneur Node ne soit actif que lorsque le conteneur MySQL l'est
+    #Relance la commande si curl renvoie un code d'erreur (exit 1 est alors execute ce qui fait fail le test)
+    healthcheck:
+            test: ["CMD", "curl -f http://localhost:${HOST_PORT_DB}:3306 || exit 1"]
+            timeout: 30s
+            interval: 2s
+            retries: 3
+  # La base de données relationnelle (ici SGBD MySQL)
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      - MYSQL_DATABASE=mydb
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./init/:/docker-entrypoint-initdb.d/
+      - ./dbdata:/var/lib/mysql
+    ports:
+      - ${HOST_PORT_DB}:3306
+    container_name: ${PROJECT_NAME}-db
+
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - db
+    container_name: ${PROJECT_NAME}-adminer
+    ports:
+      - ${HOST_PORT_ADMINER}:8080
