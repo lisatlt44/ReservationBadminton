@@ -84,41 +84,47 @@ docker-compose up -d
 
 ### API
 
-Se rendre à l'URL [localhost:5001](http://localhost:5001), ou tester (avec [curl](https://curl.se/))
+Pour accéder à l'API du projet, rendez-vous à l'URL [localhost:5001](http://localhost:5001) dans votre navigateur ou testez-la à l'aide d'un outil comme [Hoppscotch](https://hoppscotch.io/) ou [curl](https://curl.se/).
 
-~~~
-# Web humain (HTML)
+> L'utilisation de Hoppscotch est détaillée ici [Conseils pour le développement](#conseils-pour-le-développement)
+
+Exemple avec `curl` :
+
+```bash
+# Obtenir la représentation HTML
 curl --include localhost:5001
-# API (JSON)
+
+# Obtenir les données de l'API au format JSON
 curl localhost:5001
-~~~
+```
 
 ### Base de données
 
-Avec le client mysql (depuis la machine hôte) :
+Pour interagir avec la base de données, vous pouvez utiliser différents outils. Voici comment vous connecter via la ligne de commande avec MySQL : 
 
-~~~bash
+```bash
 mysql -uroot -proot -Dmydb -h127.0.0.1 -P5002
-~~~
+```
 
-Puis, dans le repl MySQL (session ouverte avec la commande précédente)
+Dans la session MySQL ouverte, vous pouvez exécuter des requêtes SQL pour obtenir des informations spécifiques, telles que la liste des utilisateurs :
 
-~~~SQL
--- Lister les utilisateurs MySQL
+```SQL
+-- Liste des utilisateurs MySQL
 SELECT user FROM mysql.user;
--- Lister les users dans la base de départ
+
+-- Liste des utilisateurs dans la base de départ
 SELECT * FROM User;
-~~~
+```
 
-Pour exécuter un script SQL en *Batch mode*
+Pour exécuter un script SQL en mode *Batch* :
 
-~~~bash
+```bash
 mysql -uroot -p -Dmydb -h127.0.0.1 -P5002 < script.sql
-~~~
+```
 
->Penser à modifier la valeur du port si vous l'avez changé dans le `.env`
+> Assurez-vous de modifier la valeur du port si vous l'avez changée dans le fichier `.env`.
 
->*Machine hôte* : la machine sur laquelle s’exécute les conteneurs Docker, *votre* machine
+> *Machine hôte* : Cela fait référence à la machine sur laquelle s’exécutent les conteneurs Docker, c'est-à-dire votre propre machine.
 
 ### Client graphique Adminer pour la base de données MySQL
 
@@ -132,13 +138,11 @@ La configuration de la base de données comprend deux utilisateurs par défaut :
 
 - `root` (administrateur), mot de passe : `root`
 - `user` (utilisateur lambda), mot de passe : `password`
-- **root** (administrateur) avec le mot de passe : **root**
-- **user** (utilisateur standard) avec le mot de passe : **password**
 
 Pour accéder à la base de données :
 
-- **Depuis un autre conteneur** (Node.js, Adminer) : `host` est défini comme `db`, qui est le nom du service dans le réseau Docker.
-- . **Depuis votre machine hôte** (une application node, PHP exécuté sur votre machine, etc.) : `host` est `localhost` ou `127.0.0.1`. **Préférer utiliser l'adresse IP `127.0.0.1` plutôt que son alias `localhost`** pour faire référence à votre machine afin d'éviter des potentiels conflits de configuration avec le fichier *socket* du serveur MySQL installé sur votre machine hôte (si applicable).
+- *Depuis un autre conteneur* (Node.js, Adminer) : `host` est défini comme `db`, qui est le nom du service dans le réseau Docker.
+- *Depuis votre machine hôte* (une application node, PHP exécuté sur votre machine, etc.) : `host` est `localhost` ou `127.0.0.1`. **Préférer utiliser l'adresse IP `127.0.0.1` plutôt que son alias `localhost`** pour faire référence à votre machine afin d'éviter des potentiels conflits de configuration avec le fichier [socket](https://www.jetbrains.com/help/datagrip/how-to-connect-to-mysql-with-unix-sockets.html) (interface de connexion sous forme de fichier sur les systèmes UNIX) du serveur MySQL installé sur votre machine hôte (si applicable).
 
 ### Importation des données dans Adminer
 
@@ -154,7 +158,7 @@ Cela créera les tables et chargera les données prêtes à être utilisées dan
 
 Inspecter les *logs* du conteneur Docker qui contiennent tout ce qui est écrit sur la sortie standard (avec `console.log()`). Les sources de l'application Node.js sont *watchées*, donc à chaque modification d'un fichier source l'application redémarre pour les prendre en compte automatiquement.
 
-> Si l'application ne redémarre par automatiquement après une modification, redémarrez le conteneur Docker manuellement, ou avec la commande : 
+> Si l'application ne redémarre pas automatiquement après une modification, bien que contraignant, veuillez à redémarrer le conteneur Docker manuellement à chaque modification, ou avec la commande : 
 
 ~~~
 docker-compose up -d
