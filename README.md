@@ -251,24 +251,23 @@ Légende :
 - `D` : **Date (et DateTime)**
 - `B` : **Booléen**
 
-Bien sûr, voici la mise à jour du tableau avec les champs supplémentaires que vous avez mentionnés :
 
 | Code                  | Désignation                                          | Type | Taille | Remarque                                    | Obligatoire |
 |-----------------------|-------------------------------------------------------|------|--------|---------------------------------------------|-------------|
-| CourtID               | Identifiant du terrain                                | N   |        | Identifiant unique                           | Oui         |
-| CourtName             | Nom du terrain                                       | A   |        | Chaîne de caractères représentant le nom du terrain | Oui         |
-| Availability          | Disponibilité du terrain                              | B    |        | Boolean indiquant la disponibilité            | Oui         |
-| StartDateUnavailable  | Date de début de l'indisponibilité temporaire        | D    |        | Date au format YYYY-mm-dd HH:mm:ss           | Non         |
-| EndDateUnavailable    | Date de fin de l'indisponibilité temporaire          | D    |        | Date au format YYYY-mm-dd HH:mm:ss           | Non         |
-| BookingID             | Identifiant de la réservation                         | N    |        | Identifiant unique          | Oui         |
-| StartTime             | Date de début de réservation                         | D    |        | Date au format YYYY-mm-dd HH:mm:ss                     | Oui         |
-| EndTime               | Date de fin de réservation                           | D    |        | Date au format YYYY-mm-dd HH:mm:ss                     | Oui         |
-| BookingDate           | Date de quand la réservation est effectuée           | D    |        | Date au format YYYY-mm-dd            | Oui         |
-| Status                | Statut de la réservation                              | A   |        | Statut de la réservation (Confirmée, Annulée) | Oui    |
-| UserID                | Identifiant de l'utilisateur                          | N    |        | Identifiant unique          | Oui         |
-| Username              | Nom d'utilisateur                                    | AN   |        | Chaîne de caractères représentant le nom d'utilisateur | Oui         |
-| Password              | Mot de passe de l'utilisateur                         | AN   |        | Mot de passe de l'utilisateur                | Non         |
-| Is_admin              | Détermine si l'utilisateur est administrateur         | B    |        | Booléen indiquant le statut administrateur   | Oui         |
+| CourtID               | Identifiant du terrain                                | N   |    Entier encodé sur 64 bits    | Identifiant unique                           | Oui         |
+| CourtName             | Nom du terrain                                       | A   |    1    | Chaîne de caractères représentant le nom du terrain | Oui         |
+| Availability          | Disponibilité du terrain                              | B    |    1    | Booléen indiquant la disponibilité (1 = true = disponible, 0 = false = indisponible)           | Oui         |
+| StartDateUnavailable  | Date de début de l'indisponibilité temporaire        | D    |    20    | Date au format YYYY-mm-dd HH:mm:ss           | Non         |
+| EndDateUnavailable    | Date de fin de l'indisponibilité temporaire          | D    |    20    | Date au format YYYY-mm-dd HH:mm:ss           | Non         |
+| BookingID             | Identifiant de la réservation                         | N    |    Entier encodé sur 64 bits    | Identifiant unique          | Oui         |
+| StartTime             | Date de début de réservation                         | D    |    20    | Date au format YYYY-mm-dd HH:mm:ss                     | Oui         |
+| EndTime               | Date de fin de réservation                           | D    |    20    | Date au format YYYY-mm-dd HH:mm:ss                     | Oui         |
+| BookingDate           | Date de quand la réservation est effectuée           | D    |    20    | Date au format YYYY-mm-dd            | Oui         |
+| Status                | Statut de la réservation                              | A   |    10    | Statut de la réservation (Confirmée, Annulée) | Oui    |
+| UserID                | Identifiant de l'utilisateur                          | N    |    Entier encodé sur 64 bits    | Identifiant unique          | Oui         |
+| Username              | Nom de l'utilisateur                                  | AN   |    12    | Chaîne de caractères représentant le nom d'utilisateur | Oui         |
+| Password              | Mot de passe de l'utilisateur                         | AN   |   20     | Mot de passe de l'utilisateur                | Non         |
+| Is_admin              | Détermine si l'utilisateur est administrateur         | B    |    1    | Booléen indiquant le statut administrateur   | Oui         |
 
 
 ## Remarques
