@@ -88,10 +88,15 @@ router.post('/terrains/:id/reservations', async function (req, res, next) {
       return
     }
 
-    // Vérifier si la durée de réservation est de 45 minutes
-    const diffInMinutes = (endTime.getTime() - startTime.getTime()) / (1000 * 60);
-    if (diffInMinutes % 45 !== 0) {
-      res.status(400).json({ "msg": "Vous ne pouvez réserver que des créneaux de 45 minutes." });
+    // Vérifier si startTime est identique à endTime
+    if (startTime.getTime() === endTime.getTime()) {
+      res.status(400).json({ "msg": "La date de début et de fin ne peuvent pas être identiques." });
+      return
+    }
+    
+    // Vérifier si la date de début est inférieure à la date actuelle
+    if (startTime < new Date()) {
+      res.status(400).json({ "msg": "La date de début doit être postérieure à la date actuelle." });
       return
     }
 
@@ -101,12 +106,22 @@ router.post('/terrains/:id/reservations', async function (req, res, next) {
       return
     }
 
-    console.log(today);
-    console.log(startTime);
+    // Vérifier si la durée de réservation est de 45 minutes
+    const diffInMinutes = (endTime.getTime() - startTime.getTime()) / (1000 * 60);
+    if (diffInMinutes !== 45) {
+      res.status(400).json({ "msg": "Vous ne pouvez réserver que des créneaux de 45 minutes." });
+      return
+    }
 
-    // Vérifier si la date de début est égale ou postérieure à la date actuelle
-    if (today > startTime) {
-      res.status(400).json({ "msg": "La date de début doit être égale ou postérieure à la date actuelle." });
+    // Vérifier si le terrain est disponible pour le créneau demandé
+    let [existingReservations] = await conn.execute(
+      `SELECT * FROM Booking 
+      WHERE id_court = ? AND start_time < ? AND end_time > ?`,
+      [req.params.id, endTime, startTime]
+    );
+
+    if (existingReservations.length > 0) {
+      res.status(400).json({ "msg": "Nous sommes désolés, ce créneau pour le terrain demandé est déjà réservé." });
       return
     }
     
