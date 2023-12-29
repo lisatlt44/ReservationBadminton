@@ -277,7 +277,7 @@ Légende :
 
 - *La liste des terrains de badminton disponibles* 
 - *Les informations sur un terrain de badminton*
-- *La modification de la disponibilité d'un terrain de badminton*
+- *La modification de l'état de disponibilité d'un terrain de badminton*
 - *La réservation d'un terrain de badminton*
 - *La liste des réservations pour un terrain*
 - *L'annulation d'une réservation*
