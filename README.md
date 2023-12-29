@@ -28,7 +28,7 @@ Un *projet* dockerisé de gestion des réservations de terrains de badminton via
 - [Remarques](#remarques)
 - [Références](#références)
 
-> Les commandes listées dans ce fichier sont destinées à être utilisées sous un environnement **Windows**. Il est possible que des ajustements soient nécessaires pour les exécuter sur d'autres systèmes d'exploitation. Veillez à adapter ces commandes en fonction de votre environnement spécifique.
+> Les commandes listées dans ce fichier sont destinées à être utilisées sous un environnement **Windows**. Il est possible que des ajustements soient nécessaires, veillez à adapter ces commandes en fonction de votre environnement spécifique.
 
 ## Prérequis
 
