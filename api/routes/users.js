@@ -7,59 +7,6 @@ var hal = require('../hal')
  * Routing des ressources liées aux utilisateurs
  */
 
-/* La liste des utilisateurs : GET /users */
-router.get('/users', async function (req, res, next) {
-
-  try {
-    const conn = await db.mysql.createConnection(db.dsn);
-
-    let [rows] = await conn.execute('SELECT * from User');
-
-    const resourceObject = {
-      "_embedded": {
-        "utilisateurs": rows.map(row => hal.mapUsertoResourceObject(row, req.baseUrl))
-      },
-      "nbUser": rows.length
-    }
-
-    res.set('Content-Type', 'application/hal+json');
-    res.status(200);
-    res.json(resourceObject);
-
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ "msg": "Nous rencontrons des difficultés, merci de réessayer plus tard."});
-  }
-});
-
-/* Informations sur un utilisateur : GET /users/:id */
-router.get('/users/:id', async function (req, res, next){
-
-  try {
-    const conn = await db.mysql.createConnection(db.dsn);
-
-    let [rows] = await conn.execute('SELECT * from User where id_user = ?', [req.params.id]);
-
-    if (rows.length === 0) {
-      res.status(404).json({ "msg": "Utilisateur non existant." });
-      return
-    }
-
-    const resourceObject = {
-      "_embedded": {
-        "utilisateurs": hal.mapUsertoResourceObject(rows[0], req.baseUrl)
-      },
-    }
-
-    res.set('Content-type', 'application/hal+json');
-    res.status(200);
-    res.json(resourceObject);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ "msg": "Nous rencontrons des difficultés, merci de réessayer plus tard."});
-  }
-});
-
 /* Ajouter un utilisateur non admin : POST /users */
 router.post('/users', async function (req, res, next) {
 

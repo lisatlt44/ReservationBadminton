@@ -142,13 +142,32 @@ router.post('/terrains/:id/reservations', async function (req, res, next) {
 /**
  * Réservation d'un terrain de badminton
  * Variation de la ressource avec les paramètres de requête d’URL (query)
- * Liste des réservations d'un terrain selon le statut (confirmed ou cancelled) : GET /terrains/:id/reservations?status={status}
+ * Ajout pseudo dans les paramètres de la requête pour que ça soit accessible qu’au propriétaire de la réservation
+ * Liste des réservations d'un terrain selon le statut (confirmed ou cancelled) : GET /terrains/:id/reservations/:pseudo?status={status}
  */
-router.get('/terrains/:id/reservations', async function (req, res, next){
+router.get('/terrains/:id/reservations/:pseudo', async function (req, res, next){
+
   const { status } = req.query;
+  const { pseudo } = req.params;
+
+  // Vérification des données requises
+  if (!pseudo) {
+    res.status(400).json({ "msg": "Merci de fournir votre pseudo pour accéder à vos réservations."});
+    return
+  }
 
   try {
-    const conn = await db.mysql.createConnection(db.dsn);  
+    const conn = await db.mysql.createConnection(db.dsn); 
+
+    // Récupérer l'utilisateur identifié par le pseudo
+    let [users] = await conn.execute(`SELECT id_user FROM User WHERE pseudo = ?`, [pseudo]);
+    
+    if (users.length === 0) {
+      res.status(403).json({ "msg": "Impossible de vous identifier, vous ne pouvez gérer vos réservations." });
+      return
+    } 
+
+    const userId = users[0].id_user;
   
     let query = 'SELECT * from Booking WHERE id_court = ?';
     const params = [req.params.id];
@@ -165,9 +184,14 @@ router.get('/terrains/:id/reservations', async function (req, res, next){
       return
     }
 
+    if (rows[0].id_user !== userId) {
+      res.status(400).json({ "msg": "Vous n'avez pas les droits pour accéder à la réservation mentionnée." });
+      return
+    }
+
     res.status(200).json({
       "_links": {
-        "self": { "href": `/terrains/${req.params.id}/reservations`},
+        "self": { "href": `/terrains/${req.params.id}/reservations/${pseudo}`},
         "terrain": { "href": `/terrains/${req.params.id}`}
       },
       "_embedded": {
