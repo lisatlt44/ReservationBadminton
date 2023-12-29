@@ -27,10 +27,6 @@ Un *projet* dockerisé de gestion des réservations de terrains de badminton via
   - [Modèle Conceptuel des Données](#modèle-conceptuel-des-données)
 - [Remarques](#remarques)
 - [Références](#références)
-  - [Docker](#docker)
-  - [Express](#express)
-  - [SGBDR](#sgbdr)
-  - [Adminer](#adminer)
 
 ## Prérequis
 
