@@ -21,6 +21,7 @@ Un *projet* dockerisé de gestion des réservations de terrains de badminton via
 - [Conception](#conception)
   - [Dictionnaire des données](#dictionnaire-des-données)
   - [Décomposition des données en ressources](#décomposition-des-données-en-ressources)
+  - [Nommage des ressources avec des URI](#nommage-des-ressources-avec-des-uri)
 - [Remarques](#remarques)
 - [Références](#références)
   - [Docker](#docker)
@@ -283,6 +284,15 @@ Légende :
 - *L'annulation d'une réservation*
 
 > Les données liées aux utilisateurs n'ont pas été décomposées en ressource car ce ne sont pas des informations exposées par le système !
+
+### Nommage des ressources avec des URI
+
+- *La liste des terrains de badminton disponibles* : `/terrains`
+- *Les informations sur un terrain de badminton*  : `/terrains/{id-terrain}`
+- *La modification de l'état de disponibilité d'un terrain de badminton* : `/terrains/{id-terrain}`, réservé à l'administrateur du site (route authentifiée par JSON Web Token).
+- *La réservation d'un terrain de badminton* : `/terrains/{id-terrain}/reservations`
+- *La liste des réservations pour un terrain* : `/terrains/{id-terrain}/reservations`, avec la variation `/terrains/{id-terrain}/reservations?status={status}` pour ordonner les réservations par statut (confirmée ou annulée)
+- *L'annulation d'une réservation* : `/terrains/{id-terrain}/reservations`
 
 ## Remarques
 
