@@ -22,6 +22,7 @@ Un *projet* dockerisé de gestion des réservations de terrains de badminton via
   - [Dictionnaire des données](#dictionnaire-des-données)
   - [Décomposition des données en ressources](#décomposition-des-données-en-ressources)
   - [Nommage des ressources avec des URI](#nommage-des-ressources-avec-des-uri)
+  - [Implémentation d'un sous-ensemble de l'interface uniforme (GET, POST, DELETE, PUT) pour chaque ressource](#implémentation-d-un-sous-ensemble-de-linterface-uniforme-get-post-delete-put-pour-chaque-ressource)
 - [Remarques](#remarques)
 - [Références](#références)
   - [Docker](#docker)
@@ -280,8 +281,6 @@ Légende :
 - *Les informations sur un terrain de badminton*
 - *La modification de l'état de disponibilité d'un terrain de badminton*
 - *La réservation d'un terrain de badminton*
-- *La liste des réservations pour un terrain*
-- *L'annulation d'une réservation*
 
 > Les données liées aux utilisateurs n'ont pas été décomposées en ressource car ce ne sont pas des informations exposées par le système !
 
@@ -291,8 +290,19 @@ Légende :
 - *Les informations sur un terrain de badminton*  : `/terrains/{id-terrain}`
 - *La modification de l'état de disponibilité d'un terrain de badminton* : `/terrains/{id-terrain}`, réservé à l'administrateur du site (route authentifiée par JSON Web Token).
 - *La réservation d'un terrain de badminton* : `/terrains/{id-terrain}/reservations`
-- *La liste des réservations pour un terrain* : `/terrains/{id-terrain}/reservations`, avec la variation `/terrains/{id-terrain}/reservations?status={status}` pour ordonner les réservations par statut (confirmée ou annulée)
-- *L'annulation d'une réservation* : `/terrains/{id-terrain}/reservations`
+
+> Cette dernière ressource contient une **variation**, `/terrains/{id-terrain}/reservations?status={status}` permettant de lister les réservations par statut (confirmée ou annulée).
+
+### Implémentation d'un sous-ensemble de l'interface uniforme (GET, POST, DELETE, PUT) pour chaque ressource
+
+- *La liste des terrains de badminton disponibles* : GET
+- *Les informations sur un terrain de badminton*  : GET
+- *La modification de l'état de disponibilité d'un terrain de badminton* : PUT (authentifié)
+- *La réservation d'un terrain de badminton* : GET, POST, DELETE
+
+> `PUT /terrains/{id}` est protégée, seul le gestionnaire du site pourra modifier l'état de disponibilité d'un terrain.
+
+### Récapitulatif
 
 ## Remarques
 
