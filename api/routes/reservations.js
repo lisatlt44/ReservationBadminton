@@ -140,8 +140,8 @@ router.post('/terrains/:id/reservations', async function (req, res, next) {
     VALUES (?, ?, ?, ?, ?, 'confirmed')`,
     [userId, req.params.id, startTime, endTime, dateBooking]);
 
-    const formattedStartDate = format(startTime, "d'/'MM'/'yyyy 'à' HH'h");
-    const formattedEndDate = format(endTime, "d'/'MM'/'yyyy 'à' HH'h");
+    const formattedStartDate = format(startTime, "d'/'MM'/'yyyy 'à' HH'h'mm");
+    const formattedEndDate = format(endTime, "d'/'MM'/'yyyy 'à' HH'h'mm");
 
     // Répondre avec les données de réservation au format HAL
     res.set('Content-Type', 'application/hal+json');
