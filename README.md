@@ -72,7 +72,7 @@ Installation des dépendances
 npm install
 ~~~
 
-> Dès que l'installation est terminée, vous pouvez revenir à la racine du projet pour la suite des instructions (`cd ..`).
+> Une fois l'installation terminée, retournez à la racine du projet en utilisant la commande `cd ..` pour poursuivre avec les instructions suivantes.
 
 Démarrer le projet
 
