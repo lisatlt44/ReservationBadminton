@@ -156,8 +156,8 @@ Pour utiliser les tables et les données préexistantes dans le projet, importez
 
 1. Lancez Adminer en accédant à [http://localhost:5003](http://localhost:5003) dans votre navigateur.
 2. Connectez-vous en utilisant les identifiants mentionnés ci-dessus (root ou user).
-3. Cliquez sur **mydb** puis sur **Importer** dans la section à gauche de l'interface Adminer.
-4. Il ne vous reste plus qu'à importer le fichier `mydb.sql` et à l'éxécuter.
+3. Cliquez sur **mydb** puis sur **Importer** dans le volet gauche de l'interface Adminer.
+4. Importez le fichier `mydb.sql` et exécutez-le.
 
 Cela créera les tables et chargera les données prêtes à être utilisées dans le projet.
 
@@ -165,7 +165,7 @@ Cela créera les tables et chargera les données prêtes à être utilisées dan
 
 Inspecter les *logs* du conteneur Docker qui contiennent tout ce qui est écrit sur la sortie standard (avec `console.log()`). Les sources de l'application Node.js sont *watchées*, donc à chaque modification d'un fichier source l'application redémarre pour les prendre en compte automatiquement.
 
-> Si l'application ne se redémarre pas automatiquement suite à une modification, bien que cela soit contraignant, veillez à redémarrer manuellement le conteneur Docker à chaque changement, ou utilisez la commande suivante : 
+> Si l'application ne se redémarre pas automatiquement après une modification, bien que cela soit contraignant, veillez à redémarrer manuellement le conteneur Docker à chaque changement, ou utilisez la commande suivante : 
 
 ~~~
 docker-compose up -d
