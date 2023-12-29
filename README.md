@@ -64,9 +64,7 @@ copy .env.dist .env
 > Vous pouvez modifier les variables d'environnement si vous le souhaitez (des valeurs par défaut sont fournies).
 
 Installation des dépendances
-- Installez toutes les dépendances nécessaires pour le projet en exécutant la commande suivante :
-
-> Avant d'exécuter la commande, assurez-vous d'être positionné correctement dans le répertoire */api* (`cd api`).
+- Installez toutes les dépendances nécessaires pour le projet en exécutant la commande suivante, en veillant à bien être positionné dans le répertoire */api* (`cd api`) :
 
 ~~~
 npm install
