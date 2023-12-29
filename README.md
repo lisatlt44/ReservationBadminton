@@ -85,7 +85,7 @@ Base de données
 
 ### Erreur connue au démarrage
 
-**Il se peut que le serveur MySQl mette un peu de temps à démarrer, résultant en une erreur (`ECONNREFUSED`) de la tentative de connexion de l'application node qui est déjà active. Il suffit de sauvegarder un fichier source js (par exemple `app.js`) pour réinitialiser l'état de l'application et de la connexion à MySQL.**
+**Il se peut que le serveur MySQl mette un peu de temps à démarrer, résultant en une erreur (`ECONNREFUSED`) de la tentative de connexion de l'application node qui est déjà active. Il suffit de sauvegarder un fichier source js (par exemple `app.js`) pour réinitialiser l'état de l'application et de la connexion à MySQL ou de redémarrer manuellement le conteneur *Docker*.**
 
 ### API
 
