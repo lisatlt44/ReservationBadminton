@@ -37,7 +37,7 @@ router.post('/terrains/:id/reservations', async function (req, res, next) {
 
     const userId = users[0].id_user;
 
-    // Récupérer le terrain demandé par l'id donné dans les paramètres de la requête
+    // Récupérer le terrain demandé par l'id donné dans les paramètres de l'URL
     let [court] = await conn.execute(
       `SELECT * FROM Courts WHERE id_court = ?`,
       [req.params.id]
@@ -171,18 +171,13 @@ router.get('/terrains/:id/reservations/:pseudo', async function (req, res, next)
   const { status } = req.query;
   const { pseudo } = req.params;
 
-  // Vérification des données requises
-  if (!pseudo) {
-    res.status(400).json({ "msg": "Merci de fournir votre pseudo pour accéder à vos réservations."});
-    return
-  }
-
   try {
     const conn = await db.mysql.createConnection(db.dsn); 
 
     // Récupérer l'utilisateur identifié par le pseudo
     let [users] = await conn.execute(`SELECT id_user FROM User WHERE pseudo = ?`, [pseudo]);
     
+    // Vérifier si l'utilisateur existe
     if (users.length === 0) {
       res.status(403).json({ "msg": "Impossible de vous identifier, vous ne pouvez gérer vos réservations." });
       return
@@ -190,9 +185,11 @@ router.get('/terrains/:id/reservations/:pseudo', async function (req, res, next)
 
     const userId = users[0].id_user;
   
+    // Récupérer la reservation demandée liée à l'id du terrain donné dans les paramètres de l'URL
     let query = 'SELECT * from Booking WHERE id_court = ?';
     const params = [req.params.id];
 
+    // Ajouter la partie query de l’URL (si présent) à la requête SQL
     if (status) {
       query += ' AND status = ?';
       params.push(status);
@@ -205,11 +202,13 @@ router.get('/terrains/:id/reservations/:pseudo', async function (req, res, next)
       return
     }
 
+    // Vérifier si l'utilisateur qui tente d'accéder à la ressource est le bon
     if (rows[0].id_user !== userId) {
       res.status(400).json({ "msg": "Vous n'avez pas les droits pour accéder à la réservation mentionnée." });
       return
     }
 
+    // Répondre avec les données de réservation au format HAL
     res.status(200).json({
       "_links": {
         "self": { "href": `/terrains/${req.params.id}/reservations/${pseudo}`},
@@ -228,7 +227,7 @@ router.get('/terrains/:id/reservations/:pseudo', async function (req, res, next)
 
 /**
  * Réservation d'un terrain de badminton
- * Annuler la réservation d'un terrain : DELETE /terrains/:id/reservations/:id
+ * Annuler la réservation d'un terrain : DELETE /terrains/:id/reservations
  */
 router.delete('/terrains/:id/reservations', async function (req, res, next) {
 
@@ -246,6 +245,7 @@ router.delete('/terrains/:id/reservations', async function (req, res, next) {
     // Récupérer l'utilisateur identifié par le pseudo
     let [users] = await conn.execute(`SELECT id_user FROM User WHERE pseudo = ?`, [pseudo]);
     
+    // Vérifier si l'utilisateur existe
     if (users.length === 0) {
       res.status(403).json({ "msg": "Impossible de vous identifier, vous ne pouvez gérer vos réservations." });
       return
@@ -253,31 +253,35 @@ router.delete('/terrains/:id/reservations', async function (req, res, next) {
 
     const userId = users[0].id_user;
 
-    // Vérifier si la réservation existe et/ou correspond au bon terrain
+    // Récupérer la réservation demandée par l'id donné dans le corps de la requête et liée à l'id du terrain donné dans les paramètres de l'URL
     let [rows] = await conn.execute(`SELECT * FROM Booking WHERE id_booking = ? AND id_court = ?`, [bookingId, req.params.id]);
 
+    // Vérifier si la réservation existe et/ou correspond au bon terrain
     if (rows.length === 0) {
       res.status(400).json({ "msg": "Impossible de trouver la réservation mentionnée. Réservation inexistante ou terrain incorrecte." });
       return
     } 
 
+    // Vérifier si l'utilisateur qui tente d'accéder à la ressource est le bon
     if (rows[0].id_user !== users[0].id_user) {
       res.status(400).json({ "msg": "Vous n'avez pas les droits pour accéder à la réservation mentionnée." });
       return
     }
     
-    // Annulation de la réservation
+    // Annuler la réservation dans la base de données
     let [updateRows] = await conn.execute(`
       UPDATE Booking
       SET status='cancelled'
       WHERE id_booking = ? AND id_court = ? AND id_user = ? AND status = 'confirmed'
     `, [bookingId, req.params.id, userId]);
 
+    // Vérifier si la réservation n'est pas déjà annulée
     if (updateRows.affectedRows === 0) {
       res.status(400).json({ "msg": "Vous ne pouvez pas annuler cette réservation pour ce terrain car elle est déjà annulée." });
       return
     }
 
+    // Répondre avec les données de réservation au format HAL
     res.set('Content-Type', 'application/hal+json');
     res.status(201).json({
       "_links": [{
@@ -285,7 +289,7 @@ router.delete('/terrains/:id/reservations', async function (req, res, next) {
         "terrain": hal.halLinkObject(`/terrains/${req.params.id}`, 'string'),
       }],
       "from": pseudo,
-      "status": `La réservation numéro ${bookingId} associé au terrain ${req.params.id} a bien été annulée.`
+      "status": `La réservation numéro ${bookingId} associée au terrain ${req.params.id} a bien été annulée.`
     });
   } catch (error) {
     console.log(error);
