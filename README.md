@@ -316,6 +316,7 @@ Légende :
 ### Modèle Conceptuel des Données
 
 Voici le schéma **UML** du `Modèle Conceptuel des Données` :
+<br>
 
 <img src="./diagramme-uml-MCD.svg" width="600px" alt="Diagramme UML du MCD">
 
