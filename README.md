@@ -316,7 +316,6 @@ Légende :
 ### Modèle Conceptuel des Données
 
 Voici le schéma **UML** du `Modèle Conceptuel des Données` :
-<br>
 
 <img src="./diagramme-uml-MCD.svg" width="600px" alt="Diagramme UML du MCD">
 
@@ -332,24 +331,6 @@ Merci M.Schuhmacher !
 
 ## Références
 
-<!-- ### Docker
-
-- [Image Docker Node](https://hub.docker.com/_/node)
-- [Image Docker MySQL](https://hub.docker.com/_/mysql)
-- [Image Docker Adminer](https://hub.docker.com/_/adminer/)
-- [Dockerizing a Node.js web app](https://nodejs.org/en/docs/guides/nodejs-docker-webapp)
-
-### Express
-
-- [Générateur d’applications Express](https://expressjs.com/fr/starter/generator.html), générer un projet pour démarrer.
-- [Routage](https://expressjs.com/fr/guide/routing.html), la documentation sur le routage d'Express.
-- [Pug](https://pugjs.org/api/getting-started.html), moteur de templates javascript installé par défaut avec Express.
-- [API JSON Web Token Authentication (JWT) sur Express.js](https://etienner.github.io/api-json-web-token-authentication-jwt-sur-express-js/), un bon tutoriel pour mettre en place des routes protégées par Json Web Token.
-
-### SGBDR
-
-- [mysql2](https://www.npmjs.com/package/mysql2), le driver node.js pour le SGBDR MySQL qui implémente l'API des promesses (contrairement à [mysql](https://www.npmjs.com/package/mysql))
-
-### Adminer
-
-- [Adminer](https://www.adminer.org/) -->
+- **Documentation officielle de la norme RESTful API** : Les spécifications et meilleures pratiques de conception des API RESTful ont été une référence clé pour construire l'architecture du projet.
+- **Communautés en ligne** : Les forums Stack Overflow et Reddit m'ont grandement aidé à résoudre des problèmes spécifiques rencontrés lors du développement.
+- **Support de cours** : Ce projet s'inspire du travail effectué en classe sur le système de billetterie et repose sur le `starterpack-api-nodejs`, ce qui m'a offert une base solide pour la mise en place de ce système de réservation de terrains de badminton.
