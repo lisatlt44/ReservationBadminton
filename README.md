@@ -66,17 +66,13 @@ copy .env.dist .env
 Installation des dépendances
 - Installez toutes les dépendances nécessaires pour le projet en exécutant la commande suivante :
 
-> Avant d'exécuter la commande, assurez-vous d'être positionné correctement dans le répertoire */api* :
-
-~~~
-cd /api
-~~~
+> Avant d'exécuter la commande, assurez-vous d'être positionné correctement dans le répertoire */api* (`cd api`).
 
 ~~~
 npm install
 ~~~
 
-> Dès que l'installation est terminée, vous pouvez revenir à la racine du projet pour la suite des instructions avec `cd ..`.
+> Dès que l'installation est terminée, vous pouvez revenir à la racine du projet pour la suite des instructions (`cd ..`).
 
 Démarrer le projet
 
