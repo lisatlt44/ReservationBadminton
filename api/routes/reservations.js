@@ -14,11 +14,12 @@ const { getDay, getHours, getISOWeek, format } = require('date-fns');
  */
 router.post('/terrains/:id/reservations', async function (req, res, next) {
 
-  // Vérification des données requises et du format des dates
-  const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/;
+  // Définition du format des dates : Y-m-dTH:i
+  const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
 
+  // Vérification des données requises
   if (!req.body.pseudo || !req.body.start_time || !req.body.end_time || !dateRegex.test(req.body.start_time) || !dateRegex.test(req.body.end_time)) {
-    res.status(400).json({ "msg": "Merci de fournir toutes les données requises pour effectuer une réservation : votre pseudo ainsi que le créneau souhaité au format Y-m-dTH:i:s (exemple : 2024-01-01T10:00:00)." });
+    res.status(400).json({ "msg": "Merci de fournir toutes les données requises pour effectuer une réservation : votre pseudo ainsi que le créneau souhaité au format Y-m-dTH:i (exemple : 2024-01-01T10:00)." });
     return
   }
 
@@ -36,7 +37,7 @@ router.post('/terrains/:id/reservations', async function (req, res, next) {
 
     const userId = users[0].id_user;
 
-    // Récupérer le terrain demandé et sa disponibilité
+    // Récupérer le terrain demandé par l'id donné dans les paramètres de la requête
     let [court] = await conn.execute(
       `SELECT * FROM Courts WHERE id_court = ?`,
       [req.params.id]
@@ -54,9 +55,13 @@ router.post('/terrains/:id/reservations', async function (req, res, next) {
       return
     }
 
-    const startTime = new Date(req.body.start_time);
-    const endTime = new Date(req.body.end_time);
-    const today = new Date().toISOString().split('T')[0];
+    // Conversion des dates au format Y-m-d H:i au fuseau horaire de Paris (UTC+1)
+    const currentDate = new Date();
+    const parisTime = new Date(currentDate.toLocaleString("en-US", { timeZone: "Europe/Paris" }));
+
+    const formattedToday = parisTime.toISOString().slice(0, 16).replace('T', ' ');
+    const startTime = new Date(req.body.start_time).toISOString().slice(0, 16).replace('T', ' ');
+    const endTime = new Date(req.body.end_time).toISOString().slice(0, 16).replace('T', ' ');
 
     // Obtenir le numéro de semaine
     const weekNumber = getISOWeek(startTime);
@@ -68,7 +73,7 @@ router.post('/terrains/:id/reservations', async function (req, res, next) {
     const hour = getHours(startTime);
 
     // Vérifier si la réservation est pour la semaine en cours
-    if (weekNumber !== getISOWeek(today)) {
+    if (weekNumber !== getISOWeek(formattedToday)) {
       res.status(400).json({ "msg": "Vous ne pouvez réserver que pour la semaine en cours." });
       return
     }
@@ -82,20 +87,20 @@ router.post('/terrains/:id/reservations', async function (req, res, next) {
     // Vérifier si l'heure est entre 10h et 22h (maximum 21h15 pour des réservations de 45 minutes)
     if (
       (hour < 10 || hour >= 22) || // En dehors des heures permises
-      (hour === 21 && endTime > new Date(endTime).setHours(22, 0, 0, 0)) // Au-delà de 21h59
+      (hour === 21 && startTime.slice(11, 16) > '21:15') // Au-delà de 21h15
     ) {
-      res.status(400).json({ "msg": "Vous ne pouvez réserver qu'entre 10h et 22h." });
+      res.status(400).json({ "msg": "Vous ne pouvez réserver qu'entre 10h et 21h15 pour des créneaux de 45 minutes." });
       return
     }
 
     // Vérifier si startTime est identique à endTime
-    if (startTime.getTime() === endTime.getTime()) {
+    if (startTime === endTime) {
       res.status(400).json({ "msg": "La date de début et de fin ne peuvent pas être identiques." });
       return
     }
     
-    // Vérifier si la date de début est inférieure à la date actuelle
-    if (startTime < new Date()) {
+    // Vérifier si la date de début est postérieure à la date actuelle
+    if (startTime < formattedToday) {
       res.status(400).json({ "msg": "La date de début doit être postérieure à la date actuelle." });
       return
     }
@@ -107,7 +112,7 @@ router.post('/terrains/:id/reservations', async function (req, res, next) {
     }
 
     // Vérifier si la durée de réservation est de 45 minutes
-    const diffInMinutes = (endTime.getTime() - startTime.getTime()) / (1000 * 60);
+    const diffInMinutes = (new Date(endTime) - new Date(startTime)) / (1000 * 60);
     if (diffInMinutes !== 45) {
       res.status(400).json({ "msg": "Vous ne pouvez réserver que des créneaux de 45 minutes." });
       return
@@ -125,7 +130,8 @@ router.post('/terrains/:id/reservations', async function (req, res, next) {
       return
     }
     
-    const dateBooking = new Date().toISOString().split('T')[0];
+    // Définir la date du jour où la réservation a été effectué (format Y-m-d), au fuseau horaire de Paris (UTC+1)
+    const dateBooking = new Date(parisTime).toISOString().split('T')[0];
 
     // Insérer la réservation dans la base de données
     let [rows3] = await conn.execute(`
@@ -133,8 +139,8 @@ router.post('/terrains/:id/reservations', async function (req, res, next) {
     VALUES (?, ?, ?, ?, ?, 'confirmed')`,
     [userId, req.params.id, startTime, endTime, dateBooking]);
 
-    const formattedStartDate = format(startTime, "d'/'MM'/'yyyy 'à' HH'h'mm");
-    const formattedEndDate = format(endTime, "d'/'MM'/'yyyy 'à' HH'h'mm");
+    const formattedStartDate = format(startTime, "d'/'MM'/'yyyy 'à' HH'h");
+    const formattedEndDate = format(endTime, "d'/'MM'/'yyyy 'à' HH'h");
 
     // Répondre avec les données de réservation au format HAL
     res.set('Content-Type', 'application/hal+json');
