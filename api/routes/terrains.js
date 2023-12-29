@@ -9,19 +9,19 @@ const { checkTokenMiddleware } = require('./authentification');
  * Routing des ressources liées aux terrains
  */
 
-/* La liste des terrains : GET /terrains */
+/* La liste des terrains disponibles : GET /terrains */
 router.get('/terrains', async function (req, res, next) {
 
   try {
     const conn = await db.mysql.createConnection(db.dsn);
 
-    let [rows] = await conn.execute('SELECT * from Courts');
+    let [rows] = await conn.execute('SELECT * from Courts WHERE availability = 1');
 
     const resourceObject = {
       "_embedded": {
         "terrains": rows.map(row => hal.mapTerraintoResourceObject(row, req.baseUrl))
       },
-      "nbTerrains": rows.length
+      "nbTerrainsDispo": rows.length
     }
 
     res.set('Content-Type', 'application/hal+json');
@@ -29,7 +29,7 @@ router.get('/terrains', async function (req, res, next) {
     res.json(resourceObject);
 
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).json({ "msg": "Nous rencontrons des difficultés, merci de réessayer plus tard."});
   }
 });
@@ -57,7 +57,7 @@ router.get('/terrains/:id', async function (req, res, next){
     res.status(200);
     res.json(resourceObject);
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).json({ "msg": "Nous rencontrons des difficultés, merci de réessayer plus tard."});
   }
 });
@@ -134,7 +134,7 @@ router.put('/terrains/:id', checkTokenMiddleware, async function (req, res, next
       "status": `Le terrain ${rows[0].name} est maintenant indisponible du ${formattedStartDate} au ${formattedEndDate}.`
     });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).json({ "msg": "Nous rencontrons des difficultés, merci de réessayer plus tard."});
   }
 });

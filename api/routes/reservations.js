@@ -134,7 +134,7 @@ router.post('/terrains/:id/reservations', async function (req, res, next) {
       "status": `Réservation confirmée pour le terrain ${court[0].name} du ${formattedStartDate} au ${formattedEndDate}.`
     });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).json({ "msg": "Nous rencontrons des difficultés, merci de réessayer plus tard."});
   }
 });
@@ -176,7 +176,7 @@ router.get('/terrains/:id/reservations', async function (req, res, next){
       "nbReservations": rows.length
     })
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).json({ "msg": "Nous rencontrons des difficultés, merci de réessayer plus tard." });
   }
 });
@@ -243,7 +243,7 @@ router.delete('/terrains/:id/reservations', async function (req, res, next) {
       "status": `La réservation numéro ${bookingId} associé au terrain ${req.params.id} a bien été annulée.`
     });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).json({ "msg": "Nous rencontrons des difficultés, merci de réessayer plus tard." });
   }
 });

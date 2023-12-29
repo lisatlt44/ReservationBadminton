@@ -27,7 +27,7 @@ router.get('/users', async function (req, res, next) {
     res.json(resourceObject);
 
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).json({ "msg": "Nous rencontrons des difficultés, merci de réessayer plus tard."});
   }
 });
@@ -55,7 +55,7 @@ router.get('/users/:id', async function (req, res, next){
     res.status(200);
     res.json(resourceObject);
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).json({ "msg": "Nous rencontrons des difficultés, merci de réessayer plus tard."});
   }
 });
@@ -99,7 +99,7 @@ router.post('/users', async function (req, res, next) {
       "status": `L'utilisateur ${req.body.pseudo} a bien été ajouté à la liste des utilisateurs.`
     });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     res.status(500).json({ "msg": "Nous rencontrons des difficultés, merci de réessayer plus tard."});
   }
 });
