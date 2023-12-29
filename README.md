@@ -304,9 +304,22 @@ Légende :
 
 ### Récapitulatif
 
+| Ressource  | URL  | Méthodes HTTP  | Paramètres d'URL (variations)  | Commentaires  |
+|---|---|---|---|---|
+| *La liste des terrains de badminton disponibles*  | `/terrains`  | GET  | X  | Seuls les terrains *disponibles* sont affichés  |
+| *Les informations sur un terrain de badminton* | `/terrains/{id-terrain}`  |  GET | X  |   |
+| *La modification de l'état de disponibilité d'un terrain de badminton*  | `/terrains/{id-terrain}`  | PUT  | X  | Modifie l'état de disponibilité d'un terrain (réservé au gestionnaire du site)  |
+| *La réservation d'un terrain de badminton*  | `/terrains/{id-terrain}/reservations`  | GET, POST, DELETE  | `status={status}`  | Ne doit être accessible qu’au propriétaire de la réservation : GET pour lister les réservations (possibilité de filtrer par statut), POST pour créer une réservation, DELETE pour annuler une réservation  |
+
 ## Remarques
 
-Pendant le développement de ce projet, même en ayant suivi le modèle de départ du `starterpack-api-nodejs`, j'ai rencontré quelques difficultés avec la configuration initiale de Docker Compose, notamment pour jongler entre les conteneurs et leurs interactions. Mais en m'appuyant sur les guides et en faisant quelques ajustements dans les fichiers d'environnement, j'ai réussi à rapidement régler ces problèmes. A mes yeux, ça a été un projet assez long et demandant une certaine logique et minutie, mais il s'est avéré être une super occasion pour approfondir mes connaissances et compétences dans le développement d'API.
+Pendant le développement de ce projet, même en ayant suivi le modèle de départ du `starterpack-api-nodejs`, j'ai rencontré quelques difficultés avec la configuration initiale de Docker Compose, notamment pour jongler entre les conteneurs et leurs interactions. Mais en m'appuyant sur les guides et en faisant quelques ajustements dans les fichiers d'environnement, j'ai réussi à rapidement régler ces problèmes. 
+
+A mes yeux, ça a été un projet assez long et demandant une certaine logique et minutie, mais il s'est avéré être une super occasion pour approfondir mes connaissances et compétences dans le développement d'API.
+
+~~~
+Merci M.Schuhmacher !
+~~~
 
 ## Références
 
