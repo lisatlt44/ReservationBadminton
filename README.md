@@ -20,6 +20,7 @@ Un *projet* dockerisé de gestion des réservations de terrains de badminton via
 - [Dépendances utilisées au sein de ce projet](#dépendances-utilisées-au-sein-de-ce-projet)
 - [Conception](#conception)
   - [Dictionnaire des données](#dictionnaire-des-données)
+  - [Décomposition des données en ressources](#décomposition-des-données-en-ressources)
 - [Remarques](#remarques)
 - [Références](#références)
   - [Docker](#docker)
@@ -271,6 +272,17 @@ Légende :
 
 
 >* Le mot *status* est un mot-clef réservé par MySQL. On utilise donc le mot français *statut* ici.
+
+### Décomposition des données en ressources
+
+- *La liste des terrains de badminton disponibles* 
+- *Les informations sur un terrain de badminton*
+- *La modification de la disponibilité d'un terrain de badminton*
+- *La réservation d'un terrain de badminton*
+- *La liste des réservations pour un terrain*
+- *L'annulation d'une réservation*
+
+> Les données liées aux utilisateurs n'ont pas été décomposées en ressource car ce ne sont pas des informations exposées par le système !
 
 ## Remarques
 
