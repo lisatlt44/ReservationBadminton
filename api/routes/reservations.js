@@ -14,10 +14,10 @@ const { getDay, getHours, getISOWeek, format } = require('date-fns');
  */
 router.post('/terrains/:id/reservations', async function (req, res, next) {
 
-  // Définition du format des dates : Y-m-dTH:i
+  // Définir le format des dates : Y-m-dTH:i
   const dateRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/;
 
-  // Vérification des données requises
+  // Vérifier les données requises
   if (!req.body.pseudo || !req.body.start_time || !req.body.end_time || !dateRegex.test(req.body.start_time) || !dateRegex.test(req.body.end_time)) {
     res.status(400).json({ "msg": "Merci de fournir toutes les données requises pour effectuer une réservation : votre pseudo ainsi que le créneau souhaité au format Y-m-dTH:i (exemple : 2024-01-01T10:00)." });
     return
@@ -55,7 +55,7 @@ router.post('/terrains/:id/reservations', async function (req, res, next) {
       return
     }
 
-    // Conversion des dates au format Y-m-d H:i au fuseau horaire de Paris (UTC+1)
+    // Convertir les dates au format Y-m-d H:i et au fuseau horaire de Paris (UTC+1)
     const currentDate = new Date();
     const parisTime = new Date(currentDate.toLocaleString("en-US", { timeZone: "Europe/Paris" }));
 
@@ -118,13 +118,14 @@ router.post('/terrains/:id/reservations', async function (req, res, next) {
       return
     }
 
-    // Vérifier si le terrain est disponible pour le créneau demandé
+    // Regarder si une réservation avec l'id de terrain donné dans les paramètres de l'URL et le créneau donné n'est pas déjà existante
     let [existingReservations] = await conn.execute(
       `SELECT * FROM Booking 
       WHERE id_court = ? AND start_time < ? AND end_time > ?`,
       [req.params.id, endTime, startTime]
     );
 
+    // Vérifier si le créneau pour le terrain demandé est déjà réservé
     if (existingReservations.length > 0) {
       res.status(400).json({ "msg": "Nous sommes désolés, ce créneau pour le terrain demandé est déjà réservé." });
       return
@@ -197,6 +198,7 @@ router.get('/terrains/:id/reservations/:pseudo', async function (req, res, next)
 
     let [rows] = await conn.execute(query, params);
 
+    // Vérifier si la réservation demandée existe
     if (rows.length === 0) {
       res.status(404).json({ "msg": "Il n'existe aucune réservation pour ce terrain ou avec ce statut."});
       return
@@ -233,7 +235,7 @@ router.delete('/terrains/:id/reservations', async function (req, res, next) {
 
   const { pseudo, bookingId } = req.body;
 
-  // Vérification des données requises
+  // Vérifier les données requises
   if (!pseudo || !bookingId) {
     res.status(400).json({ "msg": "Merci de fournir toutes les données requises pour annuler une réservation : votre pseudo, et l'identifiant de réservation."});
     return
