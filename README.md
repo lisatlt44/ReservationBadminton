@@ -24,6 +24,7 @@ Un *projet* dockerisé de gestion des réservations de terrains de badminton via
   - [Nommage des ressources avec des URI](#nommage-des-ressources-avec-des-uri)
   - [Implémentation d'un sous-ensemble de l'interface uniforme (GET, POST, DELETE, PUT) pour chaque ressource](#implémentation-dun-sous-ensemble-de-linterface-uniforme-get-post-delete-put-pour-chaque-ressource)
   - [Récapitulatif](#récapitulatif)
+  - [Modèle Conceptuel des Données](#modèle-conceptuel-des-données)
 - [Remarques](#remarques)
 - [Références](#références)
   - [Docker](#docker)
@@ -311,6 +312,12 @@ Légende :
 | *Les informations sur un terrain de badminton* | `/terrains/{id-terrain}`  |  GET | X  |   |
 | *La modification de l'état de disponibilité d'un terrain de badminton*  | `/terrains/{id-terrain}`  | PUT  | X  | Modifie l'état de disponibilité d'un terrain (réservé au gestionnaire du site)  |
 | *La réservation d'un terrain de badminton*  | `/terrains/{id-terrain}/reservations`  | GET, POST, DELETE  | `status={status}`  | Ne doit être accessible qu’au propriétaire de la réservation : GET pour lister les réservations (possibilité de filtrer par statut), POST pour créer une réservation, DELETE pour annuler une réservation  |
+
+### Modèle Conceptuel des Données
+
+Voici le schéma **UML** du `Modèle Conceptuel des Données` :
+
+<img src="./diagramme-uml-MCD.svg" width="600px" alt="Diagramme UML du MCD">
 
 ## Remarques
 
