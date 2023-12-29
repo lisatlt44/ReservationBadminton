@@ -75,8 +75,8 @@ router.post('/login', async (req, res) => {
       "_links": {
         "self": hal.halLinkObject('/login'),
         "terrains": hal.halLinkObject('/terrains'),
-        "reservations": hal.halLinkObject('/terrains/{id}/reservations', 'string', 'Liste des réservations pour un terrain donné', true),
-        "utilisateurs": hal.halLinkObject('/users')
+        "utilisateurs": hal.halLinkObject('/users'),
+        "reservations": hal.halLinkObject('/terrains/{id}/reservations', 'string', true)
       },
       "access_token": token
     })

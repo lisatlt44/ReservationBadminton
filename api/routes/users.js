@@ -5,12 +5,13 @@ var hal = require('../hal')
 
 /**
  * Routing des ressources liées aux utilisateurs
+ * Aucune requête GET pour les utilisateurs car ce ne sont pas des informations exposées par le système !
  */
 
 /* Ajouter un utilisateur non admin : POST /users */
 router.post('/users', async function (req, res, next) {
 
-  // Vérification des données requises
+  // Vérifier les données requises
   if (!req.body.pseudo) {
     res.status(400).json({ "msg": "Merci de fournir un pseudo pour ajouter un nouvel utilisateur." });
     return
@@ -19,6 +20,7 @@ router.post('/users', async function (req, res, next) {
   try {
     const conn = await db.mysql.createConnection(db.dsn);
 
+    // Insérer l'utilisateur dans la base de données
     let [rows] = await conn.execute(`
     INSERT INTO User (pseudo, is_admin)
     VALUES (?, 0)`,

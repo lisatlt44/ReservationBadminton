@@ -9,19 +9,19 @@ router.get('/', async function (req, res, next) {
 
   try {
     
-    const [rows] = await conn.execute('SELECT * FROM Courts');
+    // Récupérer la liste des terrains disponibles
+    const [rows] = await conn.execute('SELECT * FROM Courts WHERE availability = 1');
 
+    // Parcourir la liste récupérée et sélectionner le champ name
     const courts = rows.map(element => {
       return {
         courtName: element.name,
       }
     });
     res.render('index', { title: 'Bienvenue sur mybad.fr', 'courts': courts });
-
   } catch (error) {
     console.error('Error connecting: ' + error.stack);
     res.status(500).json({ "msg": "Nous rencontrons des difficultés, merci de réessayer plus tard." });
-
   }
 });
 
