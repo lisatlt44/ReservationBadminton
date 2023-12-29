@@ -66,24 +66,26 @@ copy .env.dist .env
 Installation des dépendances
 - Installez toutes les dépendances nécessaires pour le projet en exécutant la commande suivante :
 
-~~~
-npm install
-~~~
-
 > Avant d'exécuter la commande, assurez-vous d'être positionné correctement dans le répertoire */api* :
 
 ~~~
 cd /api
 ~~~
 
-Base de données
-- Assurez-vous d'importer la base de données fournie pour garantir le bon fonctionnement du projet. Pour ce faire, suivez les étapes d'importation disponibles [ici](#importation-des-données-dans-adminer).
+~~~
+npm install
+~~~
+
+> Dès que l'installation est terminée, vous pouvez revenir à la racine du projet pour la suite des instructions avec `cd ..`.
 
 Démarrer le projet
 
 ~~~
 docker-compose up -d
 ~~~
+
+Base de données
+- Assurez-vous d'importer la base de données fournie pour garantir le bon fonctionnement du projet. Pour ce faire, suivez les étapes d'importation disponibles [ici](#importation-des-données-dans-adminer).
 
 ## Tester
 
@@ -158,7 +160,8 @@ Pour utiliser les tables et les données préexistantes dans le projet, importez
 
 1. Lancez Adminer en accédant à [http://localhost:5003](http://localhost:5003) dans votre navigateur.
 2. Connectez-vous en utilisant les identifiants mentionnés ci-dessus (root ou user).
-3. Accédez à la section d'importation dans l'interface Adminer et importez le fichier `mydb.sql` présent dans le projet.
+3. Cliquez sur **mydb** puis sur **Importer** dans la section à gauche de l'interface Adminer.
+4. Il ne vous reste plus qu'à importer le fichier `mydb.sql` et à l'éxécuter.
 
 Cela créera les tables et chargera les données prêtes à être utilisées dans le projet.
 
