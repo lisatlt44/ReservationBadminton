@@ -179,7 +179,7 @@ docker logs -f rest-api-api
 ### Avec Visual Studio Code
 
 - Installer l'[extension officielle Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker).
-- Clic droit sur le conteneur `rest-api-api` qui héberge l'application Node.js,  puis `View Logs`.
+- Clic droit sur le conteneur qui héberge l'application Node.js,  puis `View Logs`.
 
 ## Installer et servir de nouvelles dépendances
 
