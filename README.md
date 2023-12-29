@@ -28,6 +28,8 @@ Un *projet* dockerisé de gestion des réservations de terrains de badminton via
 - [Remarques](#remarques)
 - [Références](#références)
 
+> Les commandes listées dans ce fichier sont destinées à être utilisées sous un environnement **Windows**. Il est possible que des ajustements soient nécessaires pour les exécuter sur d'autres systèmes d'exploitation. Veillez à adapter ces commandes en fonction de votre environnement spécifique.
+
 ## Prérequis
 
 Pour initialiser et exécuter ce projet, vous aurez besoin des éléments suivants :
@@ -46,7 +48,7 @@ cd nom_du_dépôt
 > Attention, si vous désirez créer votre propre dépôt à partir des sources, n'oubliez pas de supprimer le dossier `.git` en utilisant les commandes suivantes :
 
 ~~~
-rm -R .git
+rmdir /s .git
 git init
 ~~~
 
@@ -56,7 +58,7 @@ Fichiers d'environnement
 - Dupliquez le fichier d'environnement `.env.dist` fourni dans le dépôt et renommez-le en `.env` :
 
 ~~~
-cp .env.dist .env
+copy .env.dist .env
 ~~~
 
 > Vous pouvez modifier les variables d'environnement si vous le souhaitez (des valeurs par défaut sont fournies).
@@ -99,9 +101,9 @@ Exemple avec `curl` :
 
 ~~~
 # Web humain (HTML)
-curl --include localhost:5001
+curl -i localhost:5001
 # API (JSON)
-curl --include localhost:5001/users
+curl -i localhost:5001/terrains
 ~~~
 
 ### Base de données
@@ -112,14 +114,14 @@ Pour interagir avec la base de données, vous pouvez utiliser différents outils
 mysql -uroot -proot -Dmydb -h127.0.0.1 -P5002
 ~~~
 
-Dans la session MySQL ouverte, vous pouvez exécuter des requêtes SQL pour obtenir des informations spécifiques, telles que la liste des utilisateurs :
+Dans la session MySQL ouverte, vous pouvez exécuter des requêtes SQL pour obtenir des informations spécifiques, telles que la liste des terrains :
 
 ~~~SQL
--- Liste des utilisateurs MySQL
-SELECT user FROM mysql.user;
+-- Liste des terrains MySQL
+SELECT name FROM mydb.Courts;
 
--- Liste des utilisateurs dans la base de départ
-SELECT * FROM User;
+-- Liste des terrains dans la base de départ
+SELECT * FROM Courts;
 ~~~
 
 Pour exécuter un script SQL en mode *Batch* :
